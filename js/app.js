@@ -14,10 +14,48 @@
 // would like the dealer to use at least 2 decks.
 // Like cards to be dealt (Can just appear at first)
 
+//Lets start by making a deck of cards
+const ranks = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"]
+const suits = ["Clubs", "Diamonds", "Hearts", "Spades"]
+const deckOfCards = []
+
+//Creates the deck of cards
+const makeDeck = () => {
+    for (const rank of ranks) {
+        console.log(rank)
+        for (const suit of suits) {
+            deckOfCards.push(`${rank} of ${suit}`)
+        }
+    }
+    return deckOfCards
+}
+
+//Once called it will create a deck of cards
+makeDeck()
+console.log(deckOfCards)
+
+
+
+
 
 //Dealer Functionality
 // If dealer's total is 17 or more, they must stand
 // If the dealer's total is 16 or less, the must hit until they get to a value over 17
+
+
+class Dealer {
+    constructor () {
+        hand = []
+    }
+    hitCard() {
+
+    }
+
+    standCard() {
+
+    }
+
+}
 
 //Player Functionality
 // As a player, I want the game to allow players the ability to hit
