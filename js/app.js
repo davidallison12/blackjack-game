@@ -31,8 +31,11 @@ const makeDeck = () => {
 }
 
 //Once called it will create a deck of cards
-makeDeck()
-console.log(deckOfCards)
+// for (let i = 0; i < 6; i++) {
+//     makeDeck()
+// }
+
+// console.log(deckOfCards.length)
 
 
 
@@ -56,7 +59,7 @@ class Dealer {
         this.hand = []
     }
     hitCard(deck) {
-       let selectedCard = deck.splice(Math.floor(Math.random() * deck.length), 1).toString()
+       let selectedCard = deck.splice(Math.floor(Math.random() * deck.length), 1).toString() //This takes a random card out of the deck and makes it a string instead of array.
        this.hand.push(selectedCard)
     }
 
@@ -97,6 +100,29 @@ class Player extends Dealer {
 // console.log(you)
 
 
+//===============
+// GAME FUNCTION 
+//===============
+
+const blackjack = {
+    deck: [],
+    dealer: null,
+    players: [],
+    createDeck() {
+        for (const rank of ranks) {
+            console.log(rank)
+            for (const suit of suits) {
+                this.deck.push(`${rank} of ${suit}`)
+            }
+        }
+        // return this.deck
+    },
+
+}
+
+blackjack.createDeck()
+console.log(blackjack.deck)
+console.log(blackjack.deck.length)
 
 // UI Functionality
 // As a player, I would like a UI that is easy to understand and appealing that adds to the experience.
