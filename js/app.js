@@ -17,18 +17,18 @@
 //Lets start by making a deck of cards
 const ranks = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"]
 const suits = ["Clubs", "Diamonds", "Hearts", "Spades"]
-const deckOfCards = []
+// const deckOfCards = []
 
-//Creates the deck of cards
-const makeDeck = () => {
-    for (const rank of ranks) {
-        console.log(rank)
-        for (const suit of suits) {
-            deckOfCards.push(`${rank} of ${suit}`)
-        }
-    }
-    return deckOfCards
-}
+// //Creates the deck of cards
+// const makeDeck = () => {
+//     for (const rank of ranks) {
+//         console.log(rank)
+//         for (const suit of suits) {
+//             deckOfCards.push(`${rank} of ${suit}`)
+//         }
+//     }
+//     return deckOfCards
+// }
 
 //Once called it will create a deck of cards
 // for (let i = 0; i < 6; i++) {
@@ -117,11 +117,19 @@ const blackjack = {
         }
         // return this.deck
     },
+    startGame() {
+        //Create dealers deck | Will use 6 decks for games
+        for (let i = 0; i < 6; i++) {
+            this.createDeck()
+        }
+        this.dealer = new Dealer
+        this.players.push(new Player)
+    }
 
 }
 
-blackjack.createDeck()
-console.log(blackjack.deck)
+blackjack.startGame()
+console.log(blackjack)
 console.log(blackjack.deck.length)
 
 // UI Functionality
