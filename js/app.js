@@ -66,10 +66,10 @@ class Dealer {
 
 }
 
-let me = new Dealer
-console.log(me)
-me.hitCard(deckOfCards)
-console.log(me)
+// let me = new Dealer
+// console.log(me)
+// me.hitCard(deckOfCards)
+// console.log(me)
 
 
 //Player Functionality
@@ -77,6 +77,24 @@ console.log(me)
 // As a player, I want to the game to allow players the ability to split pairs
 // If player splits cards, they must play through both hands 
 // As a player, I want to the player to stand
+class Player extends Dealer {
+    constructor (money) {
+        super()
+        this.splitHand = []
+        this.money = money
+    }
+    splitCards() {
+       this.splitHand.push(this.hand.pop())
+    }
+}
+
+// let you = new Player
+
+// console.log(you)
+// you.hitCard(deckOfCards)
+// you.hitCard(deckOfCards)
+// you.splitCards()
+// console.log(you)
 
 
 
