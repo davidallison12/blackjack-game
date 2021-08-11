@@ -42,13 +42,22 @@ console.log(deckOfCards)
 // If dealer's total is 17 or more, they must stand
 // If the dealer's total is 16 or less, the must hit until they get to a value over 17
 
+//What things does the dealer need:
+    // Needs a hand to play against players
+    // Needs the decks of cards to distribute to players [THINK I WILL ADD THIS TO GAME LOGIC]
+    // Needs conditionals that will determine how he proceeds in the game
+    // Ability to hit or stand 
+    //Stretch Goal:
+        //Will need  
+
 
 class Dealer {
     constructor () {
-        hand = []
+        this.hand = []
     }
-    hitCard() {
-
+    hitCard(deck) {
+       let selectedCard = deck.splice(Math.floor(Math.random() * deck.length), 1).toString()
+       this.hand.push(selectedCard)
     }
 
     standCard() {
@@ -56,6 +65,12 @@ class Dealer {
     }
 
 }
+
+let me = new Dealer
+console.log(me)
+me.hitCard(deckOfCards)
+console.log(me)
+
 
 //Player Functionality
 // As a player, I want the game to allow players the ability to hit
