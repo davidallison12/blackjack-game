@@ -58,6 +58,7 @@ class Dealer {
     constructor () {
         this.hand = []
         this.faceDownCard = null
+        this.valueOfHand = 0
     }
     hitCard(deck) {
        let selectedCard = deck.splice(Math.floor(Math.random() * deck.length), 1).toString() //This takes a random card out of the deck and makes it a string instead of array.
@@ -134,10 +135,10 @@ const blackjack = {
     dealCardsToStart(deck) {
         this.dealToAllPlayers(deck)
         this.dealer.hitCard(deck)
-        this.dealToAllPlayers(deck)
+        this.dealToAllPlayers(deck) //Need to go back through and give each player a second card
         this.dealer.hitCard(deck)
-
-        this.dealer.faceDownCard = this.dealer.hand.splice(1, 1, 'undefined')
+         //Dealers 2nd card should be hidden 
+        this.dealer.faceDownCard = this.dealer.hand.splice(1, 1, undefined)
 
     }
 
@@ -148,33 +149,11 @@ blackjack.startGame()
 console.log(blackjack)
 console.log(blackjack.deck.length)
 
-//Deal Cards function 
-
-// const dealCards = (deck) => {
-//     //Need to give a card to every player in one round 
-//     const dealToPlayers = () => {
-//         for(let i = 0; i < blackjack.players.length; i++) {
-//         blackjack.players[i].hitCard(deck)
-//         }
-//     }
-//     dealToPlayers()
-//     blackjack.dealer.hitCard(deck)
-//     dealToPlayers()
-//     blackjack.dealer.hitCard(deck)
-
-//     blackjack.dealer.faceDownCard = blackjack.dealer.hand.splice(1, 1, 'undefined')
-
-//     console.log(blackjack.dealer.hand)
-//     console.log(blackjack.dealer.faceDownCard)
-    
-
-//     //Need to go back through and give each player a second card
-//     //Dealers 2nd card should be hidden 
-//     //If dealer's first card has a value of 10 or 11 then check second card to see if it gives a value of 21
-//         // Give cards values[We will make a function that has computer count values; humans can use their eyes]
 
 
-// }
+     
+
+
 console.log(blackjack.deck.length)
 
 blackjack.dealCardsToStart(blackjack.deck)
@@ -182,6 +161,31 @@ console.log(blackjack.dealer.hand)
 console.log(blackjack.dealer.faceDownCard)
 console.log(blackjack.deck.length)
 console.log(blackjack.players[0].hand)
+
+
+//If dealer's first card has a value of 10 or 11 then check second card to see if it gives a value of 21
+//         // Give cards values[We will make a function that has computer count values; humans can use their eyes]
+
+// Get Value Function
+//Based off of the value of the card in a hand this function will count how close they are to 21
+const getValueOfHand = (hand, player) => {
+    for(const card of hand) {
+        if (card !== undefined) {
+            let valueOfCard = card.split('')
+            console.log(hand)
+            console.log(typeof valueOfCard[0])
+            let numericalValue = parseInt(valueOfCard[0], 10)
+            console.log(typeof numericalValue)
+
+            player.valueOfHand += numericalValue
+            console.log(player.valueOfHand)
+         }
+    }
+
+}
+
+getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
+
 
 // UI Functionality
 // As a player, I would like a UI that is easy to understand and appealing that adds to the experience.
