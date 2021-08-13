@@ -140,6 +140,44 @@ const blackjack = {
          //Dealers 2nd card should be hidden 
         this.dealer.faceDownCard = this.dealer.hand.splice(1, 1, 'undefined')
 
+    },
+    getValueOfHand(hand, player) {
+        player.valueOfHand = 0 //Setting to 0 to read hand with clean start
+        console.log(hand)
+        for(const card of hand) {
+            let valueOfCard = card.split(' ')
+            let rankOfCard = valueOfCard[0]
+        
+            //Conditional for Face cards
+            if (rankOfCard === 'King' || rankOfCard === 'Jack' || rankOfCard === 'Queen' ) {
+                console.log(`Inside of King If Statement: ${rankOfCard}`)
+                console.log(player.valueOfHand)
+                player.valueOfHand += 10
+                console.log(player.valueOfHand)
+
+            } // Conditional for Ace
+            else if(rankOfCard === 'Ace') { //Write functionality for Ace
+                console.log(`Inside of Ace If Statement: ${rankOfCard}`)
+                console.log(player.valueOfHand)
+                player.valueOfHand += 11
+                console.log(player.valueOfHand)
+                if(player.valueOfHand > 21) { //Reads to see if over 21 first, then if so, changes value of Ace to 1
+                    player.valueOfHand -= 10
+                }
+            } // Conditional for number cards 
+            else if (rankOfCard !== 'undefined') {
+                console.log(`Inside of If Statement: ${rankOfCard}`)
+                console.log(typeof rankOfCard)
+            //    console.log(rankOfCard !== 'undefined')
+                let numericalValue = parseInt(rankOfCard, 10)
+                console.log(typeof numericalValue)
+                
+                console.log(player.valueOfHand)
+                
+                player.valueOfHand += numericalValue
+                console.log(player.valueOfHand)
+            }
+        }
     }
 
 
@@ -166,48 +204,10 @@ console.log(blackjack.dealer.faceDownCard)
 //If dealer's first card has a value of 10 or 11 then check second card to see if it gives a value of 21
 //         // Give cards values[We will make a function that has computer count values; humans can use their eyes]
 
-// Get Value Function
-//Based off of the value of the card in a hand this function will count how close they are to 21
-const getValueOfHand = (hand, player) => {
-    player.valueOfHand = 0 //Setting to 0 to read hand with clean start
-    for(const card of hand) {
-        // console.log(card)
-        let valueOfCard = card.split(' ')
-        let rankOfCard = valueOfCard[0]
-    
-        //Conditional for Face cards
-        if (rankOfCard === 'King' || rankOfCard === 'Jack' || rankOfCard === 'Queen' ) {
-            console.log(`Inside of King If Statement: ${rankOfCard}`)
-            console.log(player.valueOfHand)
-            player.valueOfHand += 10
-            console.log(player.valueOfHand)
 
-        } // Conditional for Ace
-        else if(rankOfCard === 'Ace') { //Write functionality for Ace
-            console.log(`Inside of Ace If Statement: ${rankOfCard}`)
-            console.log(player.valueOfHand)
-            player.valueOfHand += 11
-            console.log(player.valueOfHand)
-            if(player.valueOfHand > 21) { //Reads to see if over 21 first, then if so, changes value of Ace to 1
-                player.valueOfHand -= 10
-            }
-        } // Conditional for number cards 
-        else if (rankOfCard !== 'undefined') {
-            console.log(`Inside of If Statement: ${rankOfCard}`)
-            console.log(typeof rankOfCard)
-        //    console.log(rankOfCard !== 'undefined')
-            let numericalValue = parseInt(rankOfCard, 10)
-            console.log(typeof numericalValue)
-            
-            console.log(player.valueOfHand)
-            
-            player.valueOfHand += numericalValue
-            console.log(player.valueOfHand)
-        }
-    }
-}
 
-getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
+// blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
+blackjack.getValueOfHand(blackjack.players[0].hand, blackjack.players[0])
 
 
 // UI Functionality
