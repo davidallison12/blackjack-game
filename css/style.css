@@ -1,3 +1,33 @@
-body {
-    background-color: lightblue;
+*{
+    /* border: gold solid 1px; */
+
 }
+body {
+    background-color: rgb(0, 107, 54);
+}
+
+main {
+    text-align: center;
+}
+
+.blackjack-title {
+    padding-top: 10vh;
+
+}
+
+#players-container {
+    min-height: 40vh;
+    /* width: 2vh; */
+    border: gold solid 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.player-container {
+    min-height: 40vh;
+    border: blue solid 1px;
+    width: 15vw;
+
+}
+
