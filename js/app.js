@@ -197,21 +197,21 @@ class Player extends Dealer {
 // GAME FUNCTION 
 //===============
 
+//As of Saturday Aug. 14 
+// - Ensure everything that I currently have works with new cards [WORKING]
+// - Create the turn sequence 
+    // - Have all options available depending on my house rules 
+//Create conditional for if dealers faceUp card is 10 to check other card for Blackjack
+// Compare values function 
+// Log winner function
+// Going to need to re-populate cards at some point so will need a function that can erase olds decks and create new ones
+
 const blackjack = {
     deck: [],
     dealer: null,
     players: [],
     ranks: ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"],
     suits: ["Clubs", "Diamonds", "Hearts", "Spades"],
-    // createDeck() {
-    //     for(const rank of ranks) {
-    //         console.log(rank)
-    //         for (const suit of suits) {
-    //             this.deck.push(`${rank} of ${suit}`)
-    //         }
-    //     }
-    //     // return this.deck
-    // },
     createDeck(){
         let cardNumber = 0
         for (let i = 0; i < this.ranks.length; i++){
@@ -254,11 +254,8 @@ const blackjack = {
                 }
                 cardNumber++
             }
-        
         }  
-        // return deckOfCards 
     },   
-
     startGame() {
         //Create dealers deck | Will use 6 decks for games
         for(let i = 0; i < 6; i++) {
@@ -279,7 +276,7 @@ const blackjack = {
         this.dealer.hitCard(deck)
          //Dealers 2nd card should be hidden 
          console.log(this.dealer.hand)
-        // this.dealer.hand[length-1].isFaceup = false
+        this.dealer.hand[this.dealer.hand.length-1].isFaceup = false
 
     },
     getValueOfHand(hand, player) {
@@ -327,8 +324,10 @@ const blackjack = {
 blackjack.startGame()
 console.log(blackjack.deck)
 // console.log(blackjack.deck.length)
-blackjack.dealer.hitCard(blackjack.deck)
+// blackjack.dealer.hitCard(blackjack.deck)
+blackjack.dealCardsToStart(blackjack.deck)
 console.log(blackjack.dealer)
+console.log(blackjack.players[0])
 
 
      
