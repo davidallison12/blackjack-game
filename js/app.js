@@ -17,18 +17,109 @@
 //Lets start by making a deck of cards
 const ranks = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"]
 const suits = ["Clubs", "Diamonds", "Hearts", "Spades"]
-// const deckOfCards = []
 
-// //Creates the deck of cards
-// const makeDeck = () => {
-//     for (const rank of ranks) {
-//         console.log(rank)
-//         for (const suit of suits) {
-//             deckOfCards.push(`${rank} of ${suit}`)
+//=====================
+// Lets test card as object
+//=====================
+
+const deckOfCards = []
+
+//Creates the deck of cards
+const makeDeck = () => {
+    let cardNumber = 0
+    for (let i = 0; i < ranks.length; i++){
+    // for (const rank of ranks) {
+        console.log(ranks[i])
+        for(let j = 0; j < suits.length; j++ ) {
+        // for (const suit of suits) {
+            deckOfCards.push({rank: `${ranks[i]}`, suit:`${suits[j]}`, value: 0, isFaceup: true}) //Make this into an object
+            if (ranks[i] === 'King' || ranks[i] === 'Jack' || ranks[i] === 'Queen' ) {
+                            // console.log(`Inside of King If Statement: ${rankOfCard}`)
+                            // console.log(player.valueOfHand)
+                            // player.valueOfHand += 10
+                deckOfCards[cardNumber].value = 10
+                            // console.log(player.valueOfHand)
+                
+             // Conditional for Ace
+           
+            }
+            else if(ranks[i] === 'Ace') { //Write functionality for Ace
+                //             console.log(`Inside of Ace If Statement: ${rankOfCard}`)
+                //             console.log(player.valueOfHand)
+                //             player.valueOfHand += 11
+                deckOfCards[cardNumber].value = 11
+
+                //             console.log(player.valueOfHand)
+                //             if(player.valueOfHand > 21) { //Reads to see if over 21 first, then if so, changes value of Ace to 1
+                //                 player.valueOfHand -= 10
+            }
+            else {
+                //             console.log(`Inside of If Statement: ${rankOfCard}`)
+                //             console.log(typeof rankOfCard)
+                //         //    console.log(rankOfCard !== 'undefined')
+                let numericalValue = parseInt(deckOfCards[cardNumber].rank, 10)
+                //             console.log(typeof numericalValue)
+                            
+                //             console.log(player.valueOfHand)
+                            
+                deckOfCards[cardNumber].value = numericalValue
+                //             console.log(player.valueOfHand)
+             }
+            cardNumber++
+        }
+    
+    }  
+    return deckOfCards 
+}
+
+makeDeck()
+console.log(deckOfCards)
+
+
+// getValueOfHand(hand, player) {
+//     player.valueOfHand = 0 //Setting to 0 to read hand with clean start
+//     console.log(hand)
+//     for(const card of hand) {
+//         let valueOfCard = card.split(' ')
+//         let rankOfCard = valueOfCard[0]
+    
+//         //Conditional for Face cards
+//         if (rankOfCard === 'King' || rankOfCard === 'Jack' || rankOfCard === 'Queen' ) {
+//             console.log(`Inside of King If Statement: ${rankOfCard}`)
+//             console.log(player.valueOfHand)
+//             player.valueOfHand += 10
+//             console.log(player.valueOfHand)
+
+//         } // Conditional for Ace
+//         else if(rankOfCard === 'Ace') { //Write functionality for Ace
+//             console.log(`Inside of Ace If Statement: ${rankOfCard}`)
+//             console.log(player.valueOfHand)
+//             player.valueOfHand += 11
+//             console.log(player.valueOfHand)
+//             if(player.valueOfHand > 21) { //Reads to see if over 21 first, then if so, changes value of Ace to 1
+//                 player.valueOfHand -= 10
+//             }
+//         } // Conditional for number cards 
+//         else if (rankOfCard !== 'undefined') {
+//             console.log(`Inside of If Statement: ${rankOfCard}`)
+//             console.log(typeof rankOfCard)
+//         //    console.log(rankOfCard !== 'undefined')
+//             let numericalValue = parseInt(rankOfCard, 10)
+//             console.log(typeof numericalValue)
+            
+//             console.log(player.valueOfHand)
+            
+//             player.valueOfHand += numericalValue
+//             console.log(player.valueOfHand)
 //         }
 //     }
-//     return deckOfCards
 // }
+
+
+
+
+
+
 
 //Once called it will create a deck of cards
 // for (let i = 0; i < 6; i++) {
