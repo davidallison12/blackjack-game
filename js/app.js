@@ -152,7 +152,7 @@ class Dealer {
         this.valueOfHand = 0
     }
     hitCard(deck) {
-       let selectedCard = deck.splice(Math.floor(Math.random() * deck.length), 1).toString() //This takes a random card out of the deck and makes it a string instead of array.
+       let selectedCard = deck.splice(Math.floor(Math.random() * deck.length), 1).pop() //This takes a random card out of the deck and makes it a string instead of array.
        this.hand.push(selectedCard)
     }
 
@@ -278,7 +278,8 @@ const blackjack = {
         this.dealToAllPlayers(deck) //Need to go back through and give each player a second card
         this.dealer.hitCard(deck)
          //Dealers 2nd card should be hidden 
-        this.dealer.faceDownCard = this.dealer.hand.splice(1, 1, 'undefined')
+         console.log(this.dealer.hand)
+        // this.dealer.hand[length-1].isFaceup = false
 
     },
     getValueOfHand(hand, player) {
@@ -326,7 +327,8 @@ const blackjack = {
 blackjack.startGame()
 console.log(blackjack.deck)
 // console.log(blackjack.deck.length)
-
+blackjack.dealer.hitCard(blackjack.deck)
+console.log(blackjack.dealer)
 
 
      
