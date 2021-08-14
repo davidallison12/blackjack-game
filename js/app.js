@@ -27,17 +27,17 @@ const hitButton = document.querySelector('#hit-card-button')
 const standButton = document.querySelector('#stand-button')
 const splitButton = document.querySelector('#split-card-button')
 
-hitButton.addEventListener('click', () => {
-    console.log('Hit!')
-})
+// hitButton.addEventListener('click', () => {
+//     console.log('Hit!')
+// })
 
-standButton.addEventListener('click', () => {
-    console.log("Stand!")
-})
+// standButton.addEventListener('click', () => {
+//     console.log("Stand!")
+// })
 
-splitButton.addEventListener('click', () => {
-    console.log('Split')
-})
+// splitButton.addEventListener('click', () => {
+//     console.log('Split')
+// })
 
 
 
@@ -175,17 +175,27 @@ splitButton.addEventListener('click', () => {
 
 class Dealer {
     constructor () {
+        this.name = null
         this.hand = []
         this.faceDownCard = null
         this.valueOfHand = 0
+        this.playerNumber = null // On the backend 0 will be first player to align with array index
     }
     hitCard(deck) {
        let selectedCard = deck.splice(Math.floor(Math.random() * deck.length), 1).pop() //This takes a random card out of the deck and makes it a string instead of array.
        this.hand.push(selectedCard)
     }
 
-    standCard() {
-
+    standonHand(players, dealer) {
+        if (this.playersNumber < players.length -1) {
+            // takeATurn(players[playerNumber+1]) 
+        }
+        else if (this.playersNumber === players.length -1) {
+            // takeATurn(dealer)
+        }
+        else if(this.name = 'dealer') {
+            console.log('Who won?') // Winner function will go in here 
+        }
     }
 
 }
@@ -239,6 +249,8 @@ const blackjack = {
     deck: [],
     dealer: null,
     players: [],
+    totalCardHolders: null, //Will be players + dealer
+    currentplayersTurn: 0, // Will hold players number (Dealer is amount of players + 1)
     ranks: ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"],
     suits: ["Clubs", "Diamonds", "Hearts", "Spades"],
     cardNumber: 0,
@@ -292,7 +304,12 @@ const blackjack = {
             this.createDeck()
         }
         this.dealer = new Dealer
+        this.dealer.name = 'dealer'
         this.players.push(new Player)
+        this.players[0].playerNumber = this.players.length
+        this.dealer.playerNumber = this.players.length + 1
+
+        //NOTE: WANT TO ADD A DISABLE BUTTONS FEATURE HERE
     }, 
     dealToAllPlayers(deck) {
         for(let i = 0; i < this.players.length; i++) {
@@ -326,6 +343,17 @@ const blackjack = {
             }
         }
     },
+    standonHand(players, dealer) {
+        if (this.playersNumber < players.length -1) {
+            // takeATurn(players[playerNumber+1]) 
+        }
+        else if (this.playersNumber === players.length -1) {
+            // takeATurn(dealer)
+        }
+        else if(this.name = 'dealer') {
+            console.log('Who won?') // Winner function will go in here 
+        }
+    }
     //Next is taking a turn/Going through a round. What needs to happen is: 
         // Check to see if anyone has a True blackjack to start (CheckForBlackjack)
             // If this happens, player/dealer wins round 
@@ -359,31 +387,63 @@ const blackjack = {
             //***IDEA TO START: Hands are automatically an array within an array
             //Both hands will be valued seperately 
 
-const captureAnswerForSplit = () => {
-    const playersMovewithSplit = prompt('What would you like to do?', 'Hit/Stand/Split')
+// const captureAnswerForSplit = () => {
+//     const playersMovewithSplit = prompt('What would you like to do?', 'Hit/Stand/Split')
    
-    if (playersMovewithSplit === 'Hit') {
-        player.hitCard() //I think here I need a function to check for a bust, if not bust then can run this function again until the player stands
-    }
-    // else if(playersMovewithSplit === 'Split')
+//     if (playersMovewithSplit === 'Hit') {
+//         player.hitCard() //I think here I need a function to check for a bust, if not bust then can run this function again until the player stands
+//     }
+//     // else if(playersMovewithSplit === 'Split')
+// }
+
+
+
+// const playARound = () => {
+
+//     for(let i = 0; i < blackjack.players.length; i++) {
+//         hitButton.setAttribute('data-player', `${blackjack.players[i]}`)
+//         standButton.setAttribute('data-player', `${blackjack.players[i]}`)
+//         splitButton.setAttribute('data-player', `${blackjack.players[i]}`)
+//     }
+// }
+
+
+
+
+const startARound = (player) => {
+    this.totalCardHolders = this.players.length + 1
+    this.currentplayersTurn = this.currentplayersTurn++
+    document.querySelector(`.player${currentplayersTurn}-buttons-container`).disabled = false
 }
 
-const takeATurn = (player) => {
-    if (player.hand[0].rank === player.hand[1].rank) {
-        
-    // const playersMovewithSplit = prompt('What would you like to do?', 'Hit/Stand/Split')
-    captureAnswerForSplit()
-        if (playersMovewithSplit === 'Hit') {
-            player.hitCard()
-        }
-       
-    }
-    const playerMovenoSplit = prompt('What would you like to do?', 'Hit/Stand')
+    // if (player.hand[0].rank === player.hand[1].rank) {
+    //     hitButton.disabled = false
+    //     standButton.disabled = false
+    //     splitButton.disabled = false  // LETS MAKE A FUNCTION FOR THIS LATER
+    //     alert('What would you like to do?: Hit/Stand/Split')       
+    // }
+    // else {
+    //     hitButton.disabled = false
+    //     standButton.disabled = false
+    //     splitButton.disabled = true
+    //     alert('What would you like to do?: Hit/Stand')       
+    // }
 
-    if (playerMovenoSplit === 'Hit' || captureAnswerForSplit() === 'Hit') {
 
-    }
-}
+
+    // hitButton.addEventListener('click', () => {
+    //     console.log('Hit!')
+    // })
+    
+    // standButton.addEventListener('click', () => {
+    //     console.log("Stand!")
+    // })
+    
+    // splitButton.addEventListener('click', () => {
+    //     console.log('Split')
+    // })
+    
+
 
 // const playARound = () => {
 
