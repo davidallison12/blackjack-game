@@ -285,39 +285,16 @@ const blackjack = {
         console.log(hand)
         for(const card of hand) {
             let rankOfCard = card.rank
+            let valueOfCard = card.value
             console.log(`This is the card's rank: ${rankOfCard}`)
-        //     let valueOfCard = card.split(' ')
-        //     let rankOfCard = valueOfCard[0]
-        
-        //     //Conditional for Face cards
-        //     if (rankOfCard === 'King' || rankOfCard === 'Jack' || rankOfCard === 'Queen' ) {
-        //         console.log(`Inside of King If Statement: ${rankOfCard}`)
-        //         console.log(player.valueOfHand)
-        //         player.valueOfHand += 10
-        //         console.log(player.valueOfHand)
-
-        //     } // Conditional for Ace
-        //     else if(rankOfCard === 'Ace') { //Write functionality for Ace
-        //         console.log(`Inside of Ace If Statement: ${rankOfCard}`)
-        //         console.log(player.valueOfHand)
-        //         player.valueOfHand += 11
-        //         console.log(player.valueOfHand)
-        //         if(player.valueOfHand > 21) { //Reads to see if over 21 first, then if so, changes value of Ace to 1
-        //             player.valueOfHand -= 10
-        //         }
-        //     } // Conditional for number cards 
-        //     else if (rankOfCard !== 'undefined') {
-        //         console.log(`Inside of If Statement: ${rankOfCard}`)
-        //         console.log(typeof rankOfCard)
-        //     //    console.log(rankOfCard !== 'undefined')
-        //         let numericalValue = parseInt(rankOfCard, 10)
-        //         console.log(typeof numericalValue)
-                
-        //         console.log(player.valueOfHand)
-                
-        //         player.valueOfHand += numericalValue
-        //         console.log(player.valueOfHand)
-        //     }
+            player.valueOfHand += valueOfCard
+            console.log(`This is the value of Players hand: ${player.valueOfHand}`)
+        }
+        for (let i = 0; i < hand.length; i++) {
+            if (player.valueOfHand > 21 && hand[i].rank === 'Ace') {
+                hand[i].value = 1
+                this.getValueOfHand(hand, player)
+            }
         }
     }
 
@@ -329,11 +306,13 @@ console.log(blackjack.deck)
 // console.log(blackjack.deck.length)
 // blackjack.dealer.hitCard(blackjack.deck)
 blackjack.dealCardsToStart(blackjack.deck)
-console.log(blackjack.dealer)
+// console.log(blackjack.dealer)
 console.log(blackjack.players[0])
+blackjack.players[0].hitCard(blackjack.deck)
+blackjack.players[0].hitCard(blackjack.deck)
 
 // blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
-// blackjack.getValueOfHand(blackjack.players[0].hand, blackjack.players[0])
+blackjack.getValueOfHand(blackjack.players[0].hand, blackjack.players[0])
      
 
 
