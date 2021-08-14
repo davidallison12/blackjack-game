@@ -18,6 +18,34 @@
 // const ranks = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"]
 // const suits = ["Clubs", "Diamonds", "Hearts", "Spades"]
 
+
+//===================================
+// Standalone Variables and Functions 
+//===================================
+
+const hitButton = document.querySelector('#hit-card-button')
+const standButton = document.querySelector('#stand-button')
+const splitButton = document.querySelector('#split-card-button')
+
+hitButton.addEventListener('click', () => {
+    console.log('Hit!')
+})
+
+standButton.addEventListener('click', () => {
+    console.log("Stand!")
+})
+
+splitButton.addEventListener('click', () => {
+    console.log('Split')
+})
+
+
+
+
+
+
+
+
 // //=====================
 // // Lets test card as object
 // //=====================
@@ -198,11 +226,12 @@ class Player extends Dealer {
 //===============
 
 //As of Saturday Aug. 14 
-// - Ensure everything that I currently have works with new cards [WORKING]
+// - Ensure everything that I currently have works with new cards [DONE]
+// Compare values function 
 // - Create the turn sequence 
     // - Have all options available depending on my house rules 
 //Create conditional for if dealers faceUp card is 10 to check other card for Blackjack
-// Compare values function 
+
 // Log winner function
 // Going to need to re-populate cards at some point so will need a function that can erase olds decks and create new ones
 
@@ -296,10 +325,73 @@ const blackjack = {
                 this.getValueOfHand(hand, player)
             }
         }
-    }
+    },
+    //Next is taking a turn/Going through a round. What needs to happen is: 
+        // Check to see if anyone has a True blackjack to start (CheckForBlackjack)
+            // If this happens, player/dealer wins round 
+        // If no one has blackjack, first player decides to hit, stand or split(if applicable)
+        //If player hits, they receive another card
+            //If it hits, 21, move on to next players to give them a chance 
+                //Dealer will go next and try to hit 21. They can't hit after going over 16
+        //If player stands, we will move to next player
+        //If player splits, their cards will be moved to 2 separate hands (Need to figure this out)
+            //The player will then hit for both hands. 
+            //***IDEA TO START: Hands are automatically an array within an array
+            //Both hands will be valued seperately 
 
 
 }
+
+//===================
+// Taking a Turn
+//===================
+
+//Next is taking a turn/Going through a round. What needs to happen is: 
+        // Check to see if anyone has a True blackjack to start (CheckForBlackjack)
+            // If this happens, player/dealer wins round 
+        // If no one has blackjack, first player decides to hit, stand or split(if applicable)
+        //If player hits, they receive another card
+            //If it hits, 21, move on to next players to give them a chance 
+                //Dealer will go next and try to hit 21. They can't hit after going over 16
+        //If player stands, we will move to next player
+        //If player splits, their cards will be moved to 2 separate hands (Need to figure this out)
+            //The player will then hit for both hands. 
+            //***IDEA TO START: Hands are automatically an array within an array
+            //Both hands will be valued seperately 
+
+const captureAnswerForSplit = () => {
+    const playersMovewithSplit = prompt('What would you like to do?', 'Hit/Stand/Split')
+   
+    if (playersMovewithSplit === 'Hit') {
+        player.hitCard() //I think here I need a function to check for a bust, if not bust then can run this function again until the player stands
+    }
+    // else if(playersMovewithSplit === 'Split')
+}
+
+const takeATurn = (player) => {
+    if (player.hand[0].rank === player.hand[1].rank) {
+        
+    // const playersMovewithSplit = prompt('What would you like to do?', 'Hit/Stand/Split')
+    captureAnswerForSplit()
+        if (playersMovewithSplit === 'Hit') {
+            player.hitCard()
+        }
+       
+    }
+    const playerMovenoSplit = prompt('What would you like to do?', 'Hit/Stand')
+
+    if (playerMovenoSplit === 'Hit' || captureAnswerForSplit() === 'Hit') {
+
+    }
+}
+
+// const playARound = () => {
+
+// }
+
+
+//====================
+
 
 blackjack.startGame()
 console.log(blackjack.deck)
@@ -337,3 +429,6 @@ blackjack.getValueOfHand(blackjack.players[0].hand, blackjack.players[0])
 // UI Functionality
 // As a player, I would like a UI that is easy to understand and appealing that adds to the experience.
 // As a player, I would like the cards to be presented on the UI
+
+
+//Making event listeners for buttons
