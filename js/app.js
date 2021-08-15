@@ -220,6 +220,36 @@ const blackjack = {
             }
         }
     },
+    startATurn () { //This function will let player know it is their turn and they can play
+        // Will include:
+    
+        
+        //Increasing counter
+        this.currentplayersTurn = this.currentplayersTurn+=1
+        // console.log(blackjack.totalCardHolders)
+        // console.log(blackjack.currentplayersTurn)
+        // console.log(blackjack.dealer)
+        //Have a condition for the dealer
+        if(this.currentplayersTurn === this.totalCardHolders) {
+            console.log('it is the dealers turn') //Will need a function that allows the dealer to decide whether to hit or stand. 
+            return
+        }
+        
+            // Enabling buttons
+            // console.log(blackjack)
+            // console.log(document.querySelector(`.player${blackjack.currentplayersTurn}-buttons-container`))
+            document.querySelector(`#player${this.currentplayersTurn}-stand-button`).disabled = false
+            console.log(this.players[0].hand)
+            //Also include situation for if it is a split
+            if(this.players[this.currentplayersTurn - 1].hand[0].rank !== this.players[this.currentplayersTurn - 1].hand[1].rank) {
+                splitButton.disabled = true
+            }
+            // Highlighting area so player is aware it is their turn [We will make an console.log for now. Goal is to put this on the page]
+            console.log(`It is player ${this.players[this.currentplayersTurn - 1].playerNumber}'s turn!`)
+            // Player will then be able to take their turn
+        
+    
+    }
 
 
     // standonHand(players, dealer) {
@@ -345,7 +375,7 @@ const startATurn = () => { //This function will let player know it is their turn
     // })
     
     standButton.addEventListener('click', (e) => {
-       startATurn()
+       blackjack.startATurn()
     })
     
     // splitButton.addEventListener('click', () => {
@@ -374,7 +404,7 @@ console.log(blackjack.players[0])
 
 // blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
 blackjack.getValueOfHand(blackjack.players[0].hand, blackjack.players[0])
-startATurn()
+blackjack.startATurn()
      
 
 
