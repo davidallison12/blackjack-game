@@ -249,8 +249,17 @@ const blackjack = {
             // Player will then be able to take their turn
         
     
+    },
+    endATurn () {
+        //Needs to disable buttons of player who's turn just happened. 
+        document.querySelector(`#player${blackjack.currentplayersTurn}-hit-card-button`).disabled = true
+        document.querySelector(`#player${blackjack.currentplayersTurn}-stand-button`).disabled = true
+        document.querySelector(`#player${blackjack.currentplayersTurn}-split-card-button`).disabled = true
+    
+        // In the future, I would ideally like only 1 set of buttons for every player so I could think about making and appending buttons for every turn and removing old buttons. 
+        //So this one would remove buttons, while start a turn adds new buttons
+    
     }
-
 
     // standonHand(players, dealer) {
     //     if (this.playersNumber < players.length -1) {
@@ -337,7 +346,10 @@ const startATurn = () => { //This function will let player know it is their turn
         // Enabling buttons
         // console.log(blackjack)
         // console.log(document.querySelector(`.player${blackjack.currentplayersTurn}-buttons-container`))
+        document.querySelector(`#player${blackjack.currentplayersTurn}-hit-card-button`).disabled = false
         document.querySelector(`#player${blackjack.currentplayersTurn}-stand-button`).disabled = false
+        document.querySelector(`#player${blackjack.currentplayersTurn}-split-card-button`).disabled = false
+
         console.log(blackjack.players[0].hand)
         //Also include situation for if it is a split
         if(blackjack.players[blackjack.currentplayersTurn - 1].hand[0].rank !== blackjack.players[blackjack.currentplayersTurn - 1].hand[1].rank) {
@@ -346,7 +358,18 @@ const startATurn = () => { //This function will let player know it is their turn
         // Highlighting area so player is aware it is their turn [We will make an console.log for now. Goal is to put this on the page]
         console.log(`It is player ${blackjack.players[blackjack.currentplayersTurn - 1].playerNumber}'s turn!`)
         // Player will then be able to take their turn
-    
+
+}
+
+
+const endATurn = () => {
+    //Needs to disable buttons of player who's turn just happened. 
+    document.querySelector(`#player${blackjack.currentplayersTurn}-hit-card-button`).disabled = true
+    document.querySelector(`#player${blackjack.currentplayersTurn}-stand-button`).disabled = true
+    document.querySelector(`#player${blackjack.currentplayersTurn}-split-card-button`).disabled = true
+
+    // In the future, I would ideally like only 1 set of buttons for every player so I could think about making and appending buttons for every turn and removing old buttons. 
+    //So this one would remove buttons, while start a turn adds new buttons
 
 }
 
@@ -374,9 +397,10 @@ const startATurn = () => { //This function will let player know it is their turn
     //     console.log('Hit!')
     // })
     
-    standButton.addEventListener('click', (e) => {
-       blackjack.startATurn()
-    })
+standButton.addEventListener('click', (e) => {
+    blackjack.endATurn()
+    blackjack.startATurn()
+})
     
     // splitButton.addEventListener('click', () => {
     //     console.log('Split')
