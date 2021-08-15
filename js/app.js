@@ -24,7 +24,7 @@
 //===================================
 
 const hitButton = document.querySelector('#hit-card-button')
-const standButton = document.querySelector('#stand-button')
+const standButton = document.querySelector('#player1-stand-button')
 const splitButton = document.querySelector('#split-card-button')
 
 // hitButton.addEventListener('click', () => {
@@ -38,126 +38,6 @@ const splitButton = document.querySelector('#split-card-button')
 // splitButton.addEventListener('click', () => {
 //     console.log('Split')
 // })
-
-
-
-
-
-
-
-
-// //=====================
-// // Lets test card as object
-// //=====================
-
-// const deckOfCards = []
-
-// //Creates the deck of cards
-// const makeDeck = () => {
-//     let cardNumber = 0
-//     for (let i = 0; i < ranks.length; i++){
-//     // for (const rank of ranks) {
-//         console.log(ranks[i])
-//         for(let j = 0; j < suits.length; j++ ) {
-//         // for (const suit of suits) {
-//             deckOfCards.push({rank: `${ranks[i]}`, suit:`${suits[j]}`, value: 0, isFaceup: true}) //Make this into an object
-//             if (ranks[i] === 'King' || ranks[i] === 'Jack' || ranks[i] === 'Queen' ) {
-//                             // console.log(`Inside of King If Statement: ${rankOfCard}`)
-//                             // console.log(player.valueOfHand)
-//                             // player.valueOfHand += 10
-//                 deckOfCards[cardNumber].value = 10
-//                             // console.log(player.valueOfHand)
-                
-//              // Conditional for Ace
-           
-//             }
-//             else if(ranks[i] === 'Ace') { //Write functionality for Ace
-//                 //             console.log(`Inside of Ace If Statement: ${rankOfCard}`)
-//                 //             console.log(player.valueOfHand)
-//                 //             player.valueOfHand += 11
-//                 deckOfCards[cardNumber].value = 11
-
-//                 //             console.log(player.valueOfHand)
-//                 //             if(player.valueOfHand > 21) { //Reads to see if over 21 first, then if so, changes value of Ace to 1
-//                 //                 player.valueOfHand -= 10
-//             }
-//             else {
-//                 //             console.log(`Inside of If Statement: ${rankOfCard}`)
-//                 //             console.log(typeof rankOfCard)
-//                 //         //    console.log(rankOfCard !== 'undefined')
-//                 let numericalValue = parseInt(deckOfCards[cardNumber].rank, 10)
-//                 //             console.log(typeof numericalValue)
-                            
-//                 //             console.log(player.valueOfHand)
-                            
-//                 deckOfCards[cardNumber].value = numericalValue
-//                 //             console.log(player.valueOfHand)
-//              }
-//             cardNumber++
-//         }
-    
-//     }  
-//     return deckOfCards 
-// }
-
-// makeDeck()
-// console.log(deckOfCards)
-
-
-// getValueOfHand(hand, player) {
-//     player.valueOfHand = 0 //Setting to 0 to read hand with clean start
-//     console.log(hand)
-//     for(const card of hand) {
-//         let valueOfCard = card.split(' ')
-//         let rankOfCard = valueOfCard[0]
-    
-//         //Conditional for Face cards
-//         if (rankOfCard === 'King' || rankOfCard === 'Jack' || rankOfCard === 'Queen' ) {
-//             console.log(`Inside of King If Statement: ${rankOfCard}`)
-//             console.log(player.valueOfHand)
-//             player.valueOfHand += 10
-//             console.log(player.valueOfHand)
-
-//         } // Conditional for Ace
-//         else if(rankOfCard === 'Ace') { //Write functionality for Ace
-//             console.log(`Inside of Ace If Statement: ${rankOfCard}`)
-//             console.log(player.valueOfHand)
-//             player.valueOfHand += 11
-//             console.log(player.valueOfHand)
-//             if(player.valueOfHand > 21) { //Reads to see if over 21 first, then if so, changes value of Ace to 1
-//                 player.valueOfHand -= 10
-//             }
-//         } // Conditional for number cards 
-//         else if (rankOfCard !== 'undefined') {
-//             console.log(`Inside of If Statement: ${rankOfCard}`)
-//             console.log(typeof rankOfCard)
-//         //    console.log(rankOfCard !== 'undefined')
-//             let numericalValue = parseInt(rankOfCard, 10)
-//             console.log(typeof numericalValue)
-            
-//             console.log(player.valueOfHand)
-            
-//             player.valueOfHand += numericalValue
-//             console.log(player.valueOfHand)
-//         }
-//     }
-// }
-
-
-
-
-
-
-
-//Once called it will create a deck of cards
-// for (let i = 0; i < 6; i++) {
-//     makeDeck()
-// }
-
-// console.log(deckOfCards.length)
-
-
-
 
 
 //Dealer Functionality
@@ -200,10 +80,6 @@ class Dealer {
 
 }
 
-// let me = new Dealer
-// console.log(me)
-// me.hitCard(deckOfCards)
-// console.log(me)
 
 
 //Player Functionality
@@ -308,6 +184,7 @@ const blackjack = {
         this.players.push(new Player)
         this.players[0].playerNumber = this.players.length
         this.dealer.playerNumber = this.players.length + 1
+        this.totalCardHolders = this.players.length + 1
 
         //NOTE: WANT TO ADD A DISABLE BUTTONS FEATURE HERE
     }, 
@@ -343,17 +220,19 @@ const blackjack = {
             }
         }
     },
-    standonHand(players, dealer) {
-        if (this.playersNumber < players.length -1) {
-            // takeATurn(players[playerNumber+1]) 
-        }
-        else if (this.playersNumber === players.length -1) {
-            // takeATurn(dealer)
-        }
-        else if(this.name = 'dealer') {
-            console.log('Who won?') // Winner function will go in here 
-        }
-    }
+
+
+    // standonHand(players, dealer) {
+    //     if (this.playersNumber < players.length -1) {
+    //         // takeATurn(players[playerNumber+1]) 
+    //     }
+    //     else if (this.playersNumber === players.length -1) {
+    //         // takeATurn(dealer)
+    //     }
+    //     else if(this.name = 'dealer') {
+    //         console.log('Who won?') // Winner function will go in here 
+    //     }
+    // }
     //Next is taking a turn/Going through a round. What needs to happen is: 
         // Check to see if anyone has a True blackjack to start (CheckForBlackjack)
             // If this happens, player/dealer wins round 
@@ -410,11 +289,34 @@ const blackjack = {
 
 
 
-const startARound = (player) => {
-    this.totalCardHolders = this.players.length + 1
-    this.currentplayersTurn = this.currentplayersTurn++
-    document.querySelector(`.player${currentplayersTurn}-buttons-container`).disabled = false
+const startATurn = () => { //This function will let player know it is their turn and they can play
+    // Will include:
+
+    
+    //Increasing counter
+    blackjack.currentplayersTurn = blackjack.currentplayersTurn+=1
+    console.log(blackjack.totalCardHolders)
+    console.log(blackjack.currentplayersTurn)
+    console.log(blackjack.dealer)
+    //Have a condition for the dealer
+    if (blackjack.currentplayersTurn === blackjack.totalCardHolders) {
+        console.log('it is the dealers turn') //Will need a function that allows the dealer to decide whether to hit or stand. 
+    }
+    
+    // Enabling buttons
+    // console.log(blackjack)
+    // console.log(document.querySelector(`.player${blackjack.currentplayersTurn}-buttons-container`))
+    document.querySelector(`#player${blackjack.currentplayersTurn}-stand-button`).disabled = false
+    // Highlighting area so player is aware it is their turn 
+    // Player will then be able to take their turn
+    
+
 }
+
+
+
+
+
 
     // if (player.hand[0].rank === player.hand[1].rank) {
     //     hitButton.disabled = false
@@ -435,9 +337,9 @@ const startARound = (player) => {
     //     console.log('Hit!')
     // })
     
-    // standButton.addEventListener('click', () => {
-    //     console.log("Stand!")
-    // })
+    standButton.addEventListener('click', (e) => {
+       startATurn()
+    })
     
     // splitButton.addEventListener('click', () => {
     //     console.log('Split')
@@ -460,11 +362,12 @@ console.log(blackjack.deck)
 blackjack.dealCardsToStart(blackjack.deck)
 // console.log(blackjack.dealer)
 console.log(blackjack.players[0])
-blackjack.players[0].hitCard(blackjack.deck)
-blackjack.players[0].hitCard(blackjack.deck)
+// blackjack.players[0].hitCard(blackjack.deck)
+// blackjack.players[0].hitCard(blackjack.deck)
 
 // blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
 blackjack.getValueOfHand(blackjack.players[0].hand, blackjack.players[0])
+startATurn()
      
 
 

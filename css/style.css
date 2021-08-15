@@ -16,7 +16,7 @@ main {
 }
 
 #players-container {
-    min-height: 40vh;
+    min-height: 30vh;
     /* width: 2vh; */
     border: gold solid 1px;
     display: flex;
@@ -24,8 +24,16 @@ main {
     justify-content: center;
 }
 
+#player1-div {
+    display: flex;
+    /* justify-content: end; */
+    align-items: end;
+    height: 30vh;
+
+}
+
 .player-container {
-    min-height: 40vh;
+    min-height: 30vh;
     border: blue solid 1px;
     width: 15vw;
 
