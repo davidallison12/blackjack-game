@@ -25,7 +25,7 @@
 
 const hitButton = document.querySelector('#hit-card-button')
 const standButton = document.querySelector('#player1-stand-button')
-const splitButton = document.querySelector('#split-card-button')
+const splitButton = document.querySelector('#player1-split-card-button')
 
 // hitButton.addEventListener('click', () => {
 //     console.log('Hit!')
@@ -295,20 +295,27 @@ const startATurn = () => { //This function will let player know it is their turn
     
     //Increasing counter
     blackjack.currentplayersTurn = blackjack.currentplayersTurn+=1
-    console.log(blackjack.totalCardHolders)
-    console.log(blackjack.currentplayersTurn)
-    console.log(blackjack.dealer)
+    // console.log(blackjack.totalCardHolders)
+    // console.log(blackjack.currentplayersTurn)
+    // console.log(blackjack.dealer)
     //Have a condition for the dealer
-    if (blackjack.currentplayersTurn === blackjack.totalCardHolders) {
+    if(blackjack.currentplayersTurn === blackjack.totalCardHolders) {
         console.log('it is the dealers turn') //Will need a function that allows the dealer to decide whether to hit or stand. 
+        return
     }
     
-    // Enabling buttons
-    // console.log(blackjack)
-    // console.log(document.querySelector(`.player${blackjack.currentplayersTurn}-buttons-container`))
-    document.querySelector(`#player${blackjack.currentplayersTurn}-stand-button`).disabled = false
-    // Highlighting area so player is aware it is their turn 
-    // Player will then be able to take their turn
+        // Enabling buttons
+        // console.log(blackjack)
+        // console.log(document.querySelector(`.player${blackjack.currentplayersTurn}-buttons-container`))
+        document.querySelector(`#player${blackjack.currentplayersTurn}-stand-button`).disabled = false
+        console.log(blackjack.players[0].hand)
+        //Also include situation for if it is a split
+        if(blackjack.players[blackjack.currentplayersTurn - 1].hand[0].rank !== blackjack.players[blackjack.currentplayersTurn - 1].hand[1].rank) {
+            splitButton.disabled = true
+        }
+        // Highlighting area so player is aware it is their turn [We will make an console.log for now. Goal is to put this on the page]
+        console.log(`It is player ${blackjack.players[blackjack.currentplayersTurn - 1].playerNumber}'s turn!`)
+        // Player will then be able to take their turn
     
 
 }
