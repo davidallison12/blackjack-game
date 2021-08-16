@@ -23,7 +23,7 @@
 // Standalone Variables and Functions 
 //===================================
 
-const hitButton = document.querySelector('#hit-card-button')
+const hitButton = document.querySelector('#player1-hit-card-button')
 const standButton = document.querySelector('#player1-stand-button')
 const splitButton = document.querySelector('#player1-split-card-button')
 
@@ -264,7 +264,7 @@ const blackjack = {
             // console.log(`This is the value of Players hand: ${player.valueOfHand}`)
         }
         for (let i = 0; i < hand.length; i++) {
-            if (player.valueOfHand > 21 && hand[i].rank === 'Ace') {
+            if ((player.valueOfHand > 21 && hand[i].rank === 'Ace') && hand[i].value === 11) {
                 hand[i].value = 1
                 this.getValueOfHand(hand, player)
             }
@@ -486,11 +486,33 @@ const blackjack = {
     //     alert('What would you like to do?: Hit/Stand')       
     // }
 
+//Hit
+// What is supposed to happen?
+    // When button is pressed
+    // It will run the hit function on that object 
+    // It will then check the value of the object 
+    // Present that new value AND new hand to the user
 
+    hitButton.addEventListener('click', () => { // Hit button is associated to player 1
+        console.log('Hit!')
+        // It will run the hit function on that object 
+        blackjack.players[0].hitCard(blackjack.deck) 
 
-    // hitButton.addEventListener('click', () => {
-    //     console.log('Hit!')
-    // })
+        // It will then check the value of the object 
+        blackjack.getValueOfHand(blackjack.players[0].hand, blackjack.players[0])
+
+        // Present that new value AND new hand to the user
+        console.log(`The value of the player ${blackjack.players[0].playerNumber}'s hand is:`)
+        console.log(blackjack.players[0].valueOfHand)
+        console.log(`${blackjack.players[0].playerNumber}'s hand:`)
+        console.log(blackjack.players[0].hand)
+        if(blackjack.players[0].valueOfHand > 21) {
+            console.log('That is a bust! End of turn!')
+            blackjack.endATurn()
+            blackjack.startATurn()
+        }
+        
+    })
     
 standButton.addEventListener('click', (e) => {
     blackjack.endATurn()
