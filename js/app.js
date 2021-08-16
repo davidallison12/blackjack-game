@@ -59,7 +59,7 @@ class Dealer {
         this.hand = []
         this.faceDownCard = null
         this.valueOfHand = 0
-        this.playerNumber = null // On the backend 0 will be first player to align with array index
+        this.playerNumber = 0 // On the backend 0 will be first player to align with array index
     }
     hitCard(deck) {
        let selectedCard = deck.splice(Math.floor(Math.random() * deck.length), 1).pop() //This takes a random card out of the deck and makes it a string instead of array.
@@ -105,7 +105,57 @@ class Player extends Dealer {
 // you.hitCard(deckOfCards)
 // you.splitCards()
 // console.log(you)
+//====================
+//DEALER FUNCTIONALITY
+//====================
+//This is the functionality on how the dealer plays a round
+//Dealer must draw at 16 or lower 
+//Dealer must stand if hand is 17 or more
+// blackjack.startGame()
 
+const runDealersTurn = () =>{
+    if (blackjack.currentplayersTurn === blackjack.dealer.playerNumber) {
+        blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
+        blackjack.dealer.hand[1].isFaceup = true
+        console.log(blackjack.dealer.hand)
+        if (blackjack.dealer.valueOfHand >= 17) {
+            //If hand is greater than or equal to 17 we want to: 
+            //Get the value of players and dealer
+            console.log('The dealer stands!')
+            console.log('The value of the dealers hand is:')
+            console.log(blackjack.dealer.valueOfHand)
+            console.log(`Dealer's hand:`)
+            console.log(blackjack.dealer.hand)
+            for(let i = 0; i < blackjack.players.length; i++) {
+                console.log(`The value of the player ${blackjack.players[i].playerNumber}'s hand is:`)
+                console.log(blackjack.players[i].valueOfHand)
+                console.log(`${blackjack.players[i].playerNumber}'s hand:`)
+                console.log(blackjack.players[i].hand)
+
+            }
+        
+
+            //we want to compare those values(This should be a separate function)
+                //Once compare, we determine a winner of round.
+                //Issue points to winner. 
+                //Points will be held inside the player object.
+
+        }
+        //If value of hand is lower than 16:
+        //We want to hit 
+        //Get value of dealers hand
+        //Console log dealers hand 
+        else {
+            blackjack.dealer.hitCard(blackjack.deck)
+            blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
+            console.log(`This is the value of the dealer's hand:`)
+            console.log(blackjack.dealer.valueOfHand)
+            console.log(`Dealer's hand:`)
+            console.log(blackjack.dealer.hand)
+            runDealersTurn()
+        }
+    }
+}
 
 //===============
 // GAME FUNCTION 
@@ -205,13 +255,13 @@ const blackjack = {
     },
     getValueOfHand(hand, player) {
         player.valueOfHand = 0 //Setting to 0 to read hand with clean start
-        console.log(hand)
+        // console.log(hand)
         for(const card of hand) {
             let rankOfCard = card.rank
             let valueOfCard = card.value
-            console.log(`This is the card's rank: ${rankOfCard}`)
+            // console.log(`This is the card's rank: ${rankOfCard}`)
             player.valueOfHand += valueOfCard
-            console.log(`This is the value of Players hand: ${player.valueOfHand}`)
+            // console.log(`This is the value of Players hand: ${player.valueOfHand}`)
         }
         for (let i = 0; i < hand.length; i++) {
             if (player.valueOfHand > 21 && hand[i].rank === 'Ace') {
@@ -232,7 +282,9 @@ const blackjack = {
         //Have a condition for the dealer
         if(this.currentplayersTurn === this.totalCardHolders) {
             console.log('it is the dealers turn') //Will need a function that allows the dealer to decide whether to hit or stand. 
+            this.runDealersTurn()
             return
+
         }
         
             // Enabling buttons
@@ -259,6 +311,49 @@ const blackjack = {
         // In the future, I would ideally like only 1 set of buttons for every player so I could think about making and appending buttons for every turn and removing old buttons. 
         //So this one would remove buttons, while start a turn adds new buttons
     
+    },
+    runDealersTurn () {
+        if (blackjack.currentplayersTurn === blackjack.dealer.playerNumber) {
+            blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
+            blackjack.dealer.hand[1].isFaceup = true
+            console.log(blackjack.dealer.hand)
+            if (blackjack.dealer.valueOfHand >= 17) {
+                //If hand is greater than or equal to 17 we want to: 
+                //Get the value of players and dealer
+                console.log('The dealer stands!')
+                console.log('The value of the dealers hand is:')
+                console.log(blackjack.dealer.valueOfHand)
+                console.log(`Dealer's hand:`)
+                console.log(blackjack.dealer.hand)
+                for(let i = 0; i < blackjack.players.length; i++) {
+                    console.log(`The value of the player ${blackjack.players[i].playerNumber}'s hand is:`)
+                    console.log(blackjack.players[i].valueOfHand)
+                    console.log(`${blackjack.players[i].playerNumber}'s hand:`)
+                    console.log(blackjack.players[i].hand)
+    
+                }
+            
+    
+                //we want to compare those values(This should be a separate function)
+                    //Once compare, we determine a winner of round.
+                    //Issue points to winner. 
+                    //Points will be held inside the player object.
+    
+            }
+            //If value of hand is lower than 16:
+            //We want to hit 
+            //Get value of dealers hand
+            //Console log dealers hand 
+            else {
+                blackjack.dealer.hitCard(blackjack.deck)
+                blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
+                console.log(`This is the value of the dealer's hand:`)
+                console.log(blackjack.dealer.valueOfHand)
+                console.log(`Dealer's hand:`)
+                console.log(blackjack.dealer.hand)
+                this.runDealersTurn()
+            }
+        }
     }
 
     // standonHand(players, dealer) {
@@ -328,50 +423,50 @@ const blackjack = {
 
 
 
-const startATurn = () => { //This function will let player know it is their turn and they can play
-    // Will include:
+// const startATurn = () => { //This function will let player know it is their turn and they can play
+//     // Will include:
 
     
-    //Increasing counter
-    blackjack.currentplayersTurn = blackjack.currentplayersTurn+=1
-    // console.log(blackjack.totalCardHolders)
-    // console.log(blackjack.currentplayersTurn)
-    // console.log(blackjack.dealer)
-    //Have a condition for the dealer
-    if(blackjack.currentplayersTurn === blackjack.totalCardHolders) {
-        console.log('it is the dealers turn') //Will need a function that allows the dealer to decide whether to hit or stand. 
-        return
-    }
+//     //Increasing counter
+//     blackjack.currentplayersTurn = blackjack.currentplayersTurn+=1
+//     // console.log(blackjack.totalCardHolders)
+//     // console.log(blackjack.currentplayersTurn)
+//     // console.log(blackjack.dealer)
+//     //Have a condition for the dealer
+//     if(blackjack.currentplayersTurn === blackjack.totalCardHolders) {
+//         console.log('it is the dealers turn') //Will need a function that allows the dealer to decide whether to hit or stand. 
+//         return
+//     }
     
-        // Enabling buttons
-        // console.log(blackjack)
-        // console.log(document.querySelector(`.player${blackjack.currentplayersTurn}-buttons-container`))
-        document.querySelector(`#player${blackjack.currentplayersTurn}-hit-card-button`).disabled = false
-        document.querySelector(`#player${blackjack.currentplayersTurn}-stand-button`).disabled = false
-        document.querySelector(`#player${blackjack.currentplayersTurn}-split-card-button`).disabled = false
+//         // Enabling buttons
+//         // console.log(blackjack)
+//         // console.log(document.querySelector(`.player${blackjack.currentplayersTurn}-buttons-container`))
+//         document.querySelector(`#player${blackjack.currentplayersTurn}-hit-card-button`).disabled = false
+//         document.querySelector(`#player${blackjack.currentplayersTurn}-stand-button`).disabled = false
+//         document.querySelector(`#player${blackjack.currentplayersTurn}-split-card-button`).disabled = false
 
-        console.log(blackjack.players[0].hand)
-        //Also include situation for if it is a split
-        if(blackjack.players[blackjack.currentplayersTurn - 1].hand[0].rank !== blackjack.players[blackjack.currentplayersTurn - 1].hand[1].rank) {
-            splitButton.disabled = true
-        }
-        // Highlighting area so player is aware it is their turn [We will make an console.log for now. Goal is to put this on the page]
-        console.log(`It is player ${blackjack.players[blackjack.currentplayersTurn - 1].playerNumber}'s turn!`)
-        // Player will then be able to take their turn
+//         console.log(blackjack.players[0].hand)
+//         //Also include situation for if it is a split
+//         if(blackjack.players[blackjack.currentplayersTurn - 1].hand[0].rank !== blackjack.players[blackjack.currentplayersTurn - 1].hand[1].rank) {
+//             splitButton.disabled = true
+//         }
+//         // Highlighting area so player is aware it is their turn [We will make an console.log for now. Goal is to put this on the page]
+//         console.log(`It is player ${blackjack.players[blackjack.currentplayersTurn - 1].playerNumber}'s turn!`)
+//         // Player will then be able to take their turn
 
-}
+// }
 
 
-const endATurn = () => {
-    //Needs to disable buttons of player who's turn just happened. 
-    document.querySelector(`#player${blackjack.currentplayersTurn}-hit-card-button`).disabled = true
-    document.querySelector(`#player${blackjack.currentplayersTurn}-stand-button`).disabled = true
-    document.querySelector(`#player${blackjack.currentplayersTurn}-split-card-button`).disabled = true
+// const endATurn = () => {
+//     //Needs to disable buttons of player who's turn just happened. 
+//     document.querySelector(`#player${blackjack.currentplayersTurn}-hit-card-button`).disabled = true
+//     document.querySelector(`#player${blackjack.currentplayersTurn}-stand-button`).disabled = true
+//     document.querySelector(`#player${blackjack.currentplayersTurn}-split-card-button`).disabled = true
 
-    // In the future, I would ideally like only 1 set of buttons for every player so I could think about making and appending buttons for every turn and removing old buttons. 
-    //So this one would remove buttons, while start a turn adds new buttons
+//     // In the future, I would ideally like only 1 set of buttons for every player so I could think about making and appending buttons for every turn and removing old buttons. 
+//     //So this one would remove buttons, while start a turn adds new buttons
 
-}
+// }
 
 
 
@@ -400,6 +495,7 @@ const endATurn = () => {
 standButton.addEventListener('click', (e) => {
     blackjack.endATurn()
     blackjack.startATurn()
+
 })
     
     // splitButton.addEventListener('click', () => {
@@ -414,6 +510,8 @@ standButton.addEventListener('click', (e) => {
 
 
 //====================
+
+
 
 
 blackjack.startGame()
