@@ -272,7 +272,18 @@ const blackjack = {
     },
     startATurn () { //This function will let player know it is their turn and they can play
         // Will include:
-    
+        //Adding conditonal to only do counter when a player turn is done not if they have a split hand 
+        // if ((this.currentplayersTurn === this.players.playerNumber) && (this.players[this.players[this.playersplayerNumber-1]].splitHand.length === 1)) {
+        //     console.log('Lets work on the other card in this split now')
+        //     splitButton.disabled = true
+        // }
+
+        //if the typeOf on the second element in the hand array is a array then do the split 
+
+        if ((this.currentplayersTurn !== 0 ) && typeof this.player[this.currentplayersTurn - 1].hand[1][0] === "array"){
+            splitButton.disabled = true
+            console.log(his.player[this.currentplayersTurn - 1].hand[1][0])
+        }
         
         //Increasing counter
         this.currentplayersTurn = this.currentplayersTurn+=1
@@ -515,6 +526,10 @@ const blackjack = {
     })
     
 standButton.addEventListener('click', (e) => {
+    if(blackjack.players[0].splitHand.length === 1) {
+        blackjack.startATurn()
+        return
+    }
     blackjack.endATurn()
     blackjack.startATurn()
 
@@ -534,9 +549,17 @@ standButton.addEventListener('click', (e) => {
 //Conditon added to the start turn function will go through the split conditions 
  splitButton.addEventListener('click', () => {
     console.log('Split!')
-    let splitCard = blackjack.players[0].hand.pop()
-    console.log(splitCard)
-    blackjack.players[0].splitHand = splitCard
+    for(i = 0; i < blackjack.players[0].hand.length; i++) {
+        let splitCard = blackjack.players[0].hand.pop()
+        console.log(splitCard)
+        blackjack.players[0].hand.unshift([])
+        console.log(blackjack.players[0].hand)
+        blackjack.players[0].hand[0].push(splitCard)
+        
+    }
+    
+    // console.log(splitCard)
+    // blackjack.players[0].hand.push(splitCard)
     console.log(blackjack.players[0])
 })
     
