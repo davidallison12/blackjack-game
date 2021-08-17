@@ -113,49 +113,49 @@ class Player extends Dealer {
 //Dealer must stand if hand is 17 or more
 // blackjack.startGame()
 
-const runDealersTurn = () =>{
-    if (blackjack.currentplayersTurn === blackjack.dealer.playerNumber) {
-        blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
-        blackjack.dealer.hand[1].isFaceup = true
-        console.log(blackjack.dealer.hand)
-        if (blackjack.dealer.valueOfHand >= 17) {
-            //If hand is greater than or equal to 17 we want to: 
-            //Get the value of players and dealer
-            console.log('The dealer stands!')
-            console.log('The value of the dealers hand is:')
-            console.log(blackjack.dealer.valueOfHand)
-            console.log(`Dealer's hand:`)
-            console.log(blackjack.dealer.hand)
-            for(let i = 0; i < blackjack.players.length; i++) {
-                console.log(`The value of the player ${blackjack.players[i].playerNumber}'s hand is:`)
-                console.log(blackjack.players[i].valueOfHand)
-                console.log(`${blackjack.players[i].playerNumber}'s hand:`)
-                console.log(blackjack.players[i].hand)
+// const runDealersTurn = () =>{
+//     if (blackjack.currentplayersTurn === blackjack.dealer.playerNumber) {
+//         blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
+//         blackjack.dealer.hand[1].isFaceup = true
+//         console.log(blackjack.dealer.hand)
+//         if (blackjack.dealer.valueOfHand >= 17) {
+//             //If hand is greater than or equal to 17 we want to: 
+//             //Get the value of players and dealer
+//             console.log('The dealer stands!')
+//             console.log('The value of the dealers hand is:')
+//             console.log(blackjack.dealer.valueOfHand)
+//             console.log(`Dealer's hand:`)
+//             console.log(blackjack.dealer.hand)
+//             for(let i = 0; i < blackjack.players.length; i++) {
+//                 console.log(`The value of the player ${blackjack.players[i].playerNumber}'s hand is:`)
+//                 console.log(blackjack.players[i].valueOfHand)
+//                 console.log(`${blackjack.players[i].playerNumber}'s hand:`)
+//                 console.log(blackjack.players[i].hand)
 
-            }
+//             }
         
 
-            //we want to compare those values(This should be a separate function)
-                //Once compare, we determine a winner of round.
-                //Issue points to winner. 
-                //Points will be held inside the player object.
+//             //we want to compare those values(This should be a separate function)
+//                 //Once compare, we determine a winner of round.
+//                 //Issue points to winner. 
+//                 //Points will be held inside the player object.
 
-        }
-        //If value of hand is lower than 16:
-        //We want to hit 
-        //Get value of dealers hand
-        //Console log dealers hand 
-        else {
-            blackjack.dealer.hitCard(blackjack.deck)
-            blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
-            console.log(`This is the value of the dealer's hand:`)
-            console.log(blackjack.dealer.valueOfHand)
-            console.log(`Dealer's hand:`)
-            console.log(blackjack.dealer.hand)
-            runDealersTurn()
-        }
-    }
-}
+//         }
+//         //If value of hand is lower than 16:
+//         //We want to hit 
+//         //Get value of dealers hand
+//         //Console log dealers hand 
+//         else {
+//             blackjack.dealer.hitCard(blackjack.deck)
+//             blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
+//             console.log(`This is the value of the dealer's hand:`)
+//             console.log(blackjack.dealer.valueOfHand)
+//             console.log(`Dealer's hand:`)
+//             console.log(blackjack.dealer.hand)
+//             runDealersTurn()
+//         }
+//     }
+// }
 
 //===============
 // GAME FUNCTION 
@@ -519,10 +519,26 @@ standButton.addEventListener('click', (e) => {
     blackjack.startATurn()
 
 })
+
+//Split
+ // What needs to happen
+ // When player has 2 cards that are the same they are given the option to split them
+ // When pressed:
+ // 1 card is taken out of hand and added into a new array and this value is added to splithand key
+ // Player then goes through normal options on the first card in their hand 
+ // Once the stand or bust on the first hand, they are able to move to the second hand and do the same
+ // Once the player stands or bust on the second hand, we then move to the next player
     
-    // splitButton.addEventListener('click', () => {
-    //     console.log('Split')
-    // })
+    
+//Split Button will only control splitting the cards
+//Conditon added to the start turn function will go through the split conditions 
+ splitButton.addEventListener('click', () => {
+    console.log('Split!')
+    let splitCard = blackjack.players[0].hand.pop()
+    console.log(splitCard)
+    blackjack.players[0].splitHand = splitCard
+    console.log(blackjack.players[0])
+})
     
 
 
