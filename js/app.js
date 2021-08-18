@@ -301,22 +301,26 @@ const blackjack = {
                     // console.log(player.hand.indexOf(hand))
                     player.valueOfHand[0] += valueOfCard
                     console.log(player)
+
                 for (let i = 0; i < hand.length; i++) {
                     if ((player.valueOfHand[0] > 21 && hand[i].rank === 'Ace') && hand[i].value === 11) {
                             hand[i].value = 1
-                            this.getValueOfHand(hand, player)
+                            this.getValueOfHandwithSplit(hand, player)
                     }
                 }
             // console.log(`This is the value of Players hand: ${player.valueOfHand}`)
                 }
                 else if(blackjack.players[0].hand[0][0].isHandComplete === true) {
+                    console.log(blackjack.players[0].valueOfHand)
+                    
                     player.valueOfHand[1] += valueOfCard
+                    console.log(blackjack.players[0].valueOfHand)
                     console.log(player)
 
                     for (let i = 0; i < hand.length; i++) {
                         if ((player.valueOfHand[1] > 21 && hand[i].rank === 'Ace') && hand[i].value === 11) {
                             hand[i].value = 1
-                            this.getValueOfHand(hand, player)
+                            this.getValueOfHandwithSplit(hand, player)
                         }
                     }
                 }
@@ -576,14 +580,18 @@ const blackjack = {
     hitButton.addEventListener('click', () => { // Hit button is associated to player 1
         console.log('Hit!')
         // console.log(blackjack.players[0].hand[0][0])
+
+        // SPLIT FUNCTIONALITY
         //Conditional for when cards are split
         if (blackjack.players[0].hand[0][0]) {
+            //FOR THE ZERO INDEX IN THE SPLIT HAND
             if(blackjack.players[0].hand[0][0].rank === blackjack.players[0].hand[1][0].rank){
                 console.log('We are in the split')
                 if(blackjack.players[0].hand[0][0].isHandComplete === false){
                     blackjack.players[0].hitCard(blackjack.deck, blackjack.players[0].hand[0])
                     //This needs to hit a card and do essentially everything the standard is doing. 
                     blackjack.getValueOfHandwithSplit(blackjack.players[0].hand[0], blackjack.players[0])
+
                     if(blackjack.players[0].valueOfHand[0] > 21) {
                         console.log('That is a bust! End of turn!')
                         blackjack.players[0].hand[0].forEach(card => {
@@ -598,6 +606,25 @@ const blackjack = {
 
                     return
                 }
+                //THIS WILL FOCUS ON THE ONE INDEX OF THE SPLUT HAND 
+                else if(blackjack.players[0].hand[0][0].isHandComplete === true){
+                    blackjack.players[0].hitCard(blackjack.deck, blackjack.players[0].hand[1])
+                    //This needs to hit a card and do essentially everything the standard is doing. 
+                    blackjack.getValueOfHandwithSplit(blackjack.players[0].hand[1], blackjack.players[0])
+                    
+                    if(blackjack.players[0].valueOfHand[1] > 21) {
+                        console.log('That is a bust! End of turn!')
+                        blackjack.players[0].hand[1].forEach(card => {
+                        card.isHandComplete = true
+                        
+                        });
+                        console.log('End of second split')
+                        console.log(blackjack.players[0].hand[0])
+                        // blackjack.endATurn()
+                        // blackjack.startATurn()
+                    }
+
+
                 console.log(blackjack.players[0].hand[0][0])
                 //no the first hurdle is adjusting hitCard function in order to hit whatever hand I need
                 return
@@ -621,7 +648,8 @@ const blackjack = {
             blackjack.startATurn()
         }
         
-    })
+    }
+})
     
 standButton.addEventListener('click', (e) => {
     if(blackjack.players[0].hand[0][0]) {
