@@ -27,17 +27,7 @@ const hitButton = document.querySelector('#player1-hit-card-button')
 const standButton = document.querySelector('#player1-stand-button')
 const splitButton = document.querySelector('#player1-split-card-button')
 
-// hitButton.addEventListener('click', () => {
-//     console.log('Hit!')
-// })
 
-// standButton.addEventListener('click', () => {
-//     console.log("Stand!")
-// })
-
-// splitButton.addEventListener('click', () => {
-//     console.log('Split')
-// })
 
 
 //Dealer Functionality
@@ -98,64 +88,8 @@ class Player extends Dealer {
     }
 }
 
-// let you = new Player
 
-// console.log(you)
-// you.hitCard(deckOfCards)
-// you.hitCard(deckOfCards)
-// you.splitCards()
-// console.log(you)
-//====================
-//DEALER FUNCTIONALITY
-//====================
-//This is the functionality on how the dealer plays a round
-//Dealer must draw at 16 or lower 
-//Dealer must stand if hand is 17 or more
-// blackjack.startGame()
 
-// const runDealersTurn = () =>{
-//     if (blackjack.currentplayersTurn === blackjack.dealer.playerNumber) {
-//         blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
-//         blackjack.dealer.hand[1].isFaceup = true
-//         console.log(blackjack.dealer.hand)
-//         if (blackjack.dealer.valueOfHand >= 17) {
-//             //If hand is greater than or equal to 17 we want to: 
-//             //Get the value of players and dealer
-//             console.log('The dealer stands!')
-//             console.log('The value of the dealers hand is:')
-//             console.log(blackjack.dealer.valueOfHand)
-//             console.log(`Dealer's hand:`)
-//             console.log(blackjack.dealer.hand)
-//             for(let i = 0; i < blackjack.players.length; i++) {
-//                 console.log(`The value of the player ${blackjack.players[i].playerNumber}'s hand is:`)
-//                 console.log(blackjack.players[i].valueOfHand)
-//                 console.log(`${blackjack.players[i].playerNumber}'s hand:`)
-//                 console.log(blackjack.players[i].hand)
-
-//             }
-        
-
-//             //we want to compare those values(This should be a separate function)
-//                 //Once compare, we determine a winner of round.
-//                 //Issue points to winner. 
-//                 //Points will be held inside the player object.
-
-//         }
-//         //If value of hand is lower than 16:
-//         //We want to hit 
-//         //Get value of dealers hand
-//         //Console log dealers hand 
-//         else {
-//             blackjack.dealer.hitCard(blackjack.deck)
-//             blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
-//             console.log(`This is the value of the dealer's hand:`)
-//             console.log(blackjack.dealer.valueOfHand)
-//             console.log(`Dealer's hand:`)
-//             console.log(blackjack.dealer.hand)
-//             runDealersTurn()
-//         }
-//     }
-// }
 
 //===============
 // GAME FUNCTION 
@@ -338,36 +272,17 @@ const blackjack = {
     },
    
     startATurn () { //This function will let player know it is their turn and they can play
-        // Will include:
-        //Adding conditonal to only do counter when a player turn is done not if they have a split hand 
-        // if ((this.currentplayersTurn === this.players.playerNumber) && (this.players[this.players[this.playersplayerNumber-1]].splitHand.length === 1)) {
-        //     console.log('Lets work on the other card in this split now')
-        //     splitButton.disabled = true
-        // }
-
-        //if the typeOf on the second element in the hand array is a array then do the split 
-
-        // if ((this.currentplayersTurn !== 0 ) && typeof this.player[this.currentplayersTurn - 1].hand[1][0] === "array"){
-        //     splitButton.disabled = true
-        //     console.log(his.player[this.currentplayersTurn - 1].hand[1][0])
-        // }
         
         //Increasing counter
         this.currentplayersTurn = this.currentplayersTurn+=1
-        // console.log(blackjack.totalCardHolders)
-        // console.log(blackjack.currentplayersTurn)
-        // console.log(blackjack.dealer)
         //Have a condition for the dealer
         if(this.currentplayersTurn === this.totalCardHolders) {
             console.log('it is the dealers turn') //Will need a function that allows the dealer to decide whether to hit or stand. 
             this.runDealersTurn()
             return
-
         }
         
             // Enabling buttons
-            // console.log(blackjack)
-            // console.log(document.querySelector(`.player${blackjack.currentplayersTurn}-buttons-container`))
             document.querySelector(`#player${this.currentplayersTurn}-stand-button`).disabled = false
             console.log(this.players[0].hand)
             //Also include situation for if it is a split
@@ -439,32 +354,6 @@ const blackjack = {
         }
     }
 
-
-    // standonHand(players, dealer) {
-    //     if (this.playersNumber < players.length -1) {
-    //         // takeATurn(players[playerNumber+1]) 
-    //     }
-    //     else if (this.playersNumber === players.length -1) {
-    //         // takeATurn(dealer)
-    //     }
-    //     else if(this.name = 'dealer') {
-    //         console.log('Who won?') // Winner function will go in here 
-    //     }
-    // }
-    //Next is taking a turn/Going through a round. What needs to happen is: 
-        // Check to see if anyone has a True blackjack to start (CheckForBlackjack)
-            // If this happens, player/dealer wins round 
-        // If no one has blackjack, first player decides to hit, stand or split(if applicable)
-        //If player hits, they receive another card
-            //If it hits, 21, move on to next players to give them a chance 
-                //Dealer will go next and try to hit 21. They can't hit after going over 16
-        //If player stands, we will move to next player
-        //If player splits, their cards will be moved to 2 separate hands (Need to figure this out)
-            //The player will then hit for both hands. 
-            //***IDEA TO START: Hands are automatically an array within an array
-            //Both hands will be valued seperately 
-
-
 }
 
 //===================
@@ -484,43 +373,10 @@ const blackjack = {
             //***IDEA TO START: Hands are automatically an array within an array
             //Both hands will be valued seperately 
 
-// const captureAnswerForSplit = () => {
-//     const playersMovewithSplit = prompt('What would you like to do?', 'Hit/Stand/Split')
-   
-//     if (playersMovewithSplit === 'Hit') {
-//         player.hitCard() //I think here I need a function to check for a bust, if not bust then can run this function again until the player stands
-//     }
-//     // else if(playersMovewithSplit === 'Split')
-// }
-
-
-
-// const playARound = () => {
-
-//     for(let i = 0; i < blackjack.players.length; i++) {
-//         hitButton.setAttribute('data-player', `${blackjack.players[i]}`)
-//         standButton.setAttribute('data-player', `${blackjack.players[i]}`)
-//         splitButton.setAttribute('data-player', `${blackjack.players[i]}`)
-//     }
-// }
 
 
 
 
-// const startATurn = () => { //This function will let player know it is their turn and they can play
-//     // Will include:
-
-    
-//     //Increasing counter
-//     blackjack.currentplayersTurn = blackjack.currentplayersTurn+=1
-//     // console.log(blackjack.totalCardHolders)
-//     // console.log(blackjack.currentplayersTurn)
-//     // console.log(blackjack.dealer)
-//     //Have a condition for the dealer
-//     if(blackjack.currentplayersTurn === blackjack.totalCardHolders) {
-//         console.log('it is the dealers turn') //Will need a function that allows the dealer to decide whether to hit or stand. 
-//         return
-//     }
     
 //         // Enabling buttons
 //         // console.log(blackjack)
@@ -541,34 +397,7 @@ const blackjack = {
 // }
 
 
-// const endATurn = () => {
-//     //Needs to disable buttons of player who's turn just happened. 
-//     document.querySelector(`#player${blackjack.currentplayersTurn}-hit-card-button`).disabled = true
-//     document.querySelector(`#player${blackjack.currentplayersTurn}-stand-button`).disabled = true
-//     document.querySelector(`#player${blackjack.currentplayersTurn}-split-card-button`).disabled = true
 
-//     // In the future, I would ideally like only 1 set of buttons for every player so I could think about making and appending buttons for every turn and removing old buttons. 
-//     //So this one would remove buttons, while start a turn adds new buttons
-
-// }
-
-
-
-
-
-
-    // if (player.hand[0].rank === player.hand[1].rank) {
-    //     hitButton.disabled = false
-    //     standButton.disabled = false
-    //     splitButton.disabled = false  // LETS MAKE A FUNCTION FOR THIS LATER
-    //     alert('What would you like to do?: Hit/Stand/Split')       
-    // }
-    // else {
-    //     hitButton.disabled = false
-    //     standButton.disabled = false
-    //     splitButton.disabled = true
-    //     alert('What would you like to do?: Hit/Stand')       
-    // }
 
 //Hit
 // What is supposed to happen?
@@ -603,9 +432,9 @@ const blackjack = {
                         // blackjack.endATurn()
                         // blackjack.startATurn()
                     }
-
                     return
                 }
+
                 //THIS WILL FOCUS ON THE ONE INDEX OF THE SPLUT HAND 
                 else if(blackjack.players[0].hand[0][0].isHandComplete === true){
                     blackjack.players[0].hitCard(blackjack.deck, blackjack.players[0].hand[1])
@@ -650,6 +479,9 @@ const blackjack = {
         
     }
 })
+
+
+
     
 standButton.addEventListener('click', (e) => {
     if(blackjack.players[0].hand[0][0]) {
