@@ -61,9 +61,9 @@ class Dealer {
         this.valueOfHand = 0
         this.playerNumber = 0 // On the backend 0 will be first player to align with array index
     }
-    hitCard(deck) {
+    hitCard(deck, hand) {
        let selectedCard = deck.splice(Math.floor(Math.random() * deck.length), 1).pop() //This takes a random card out of the deck and makes it a string instead of array.
-       this.hand.push(selectedCard)
+       hand.push(selectedCard)
     }
 
     standonHand(players, dealer) {
@@ -240,14 +240,14 @@ const blackjack = {
     }, 
     dealToAllPlayers(deck) {
         for(let i = 0; i < this.players.length; i++) {
-            this.players[i].hitCard(deck)
+            this.players[i].hitCard(deck, this.players[i].hand)
             }
     },
     dealCardsToStart(deck) {
         this.dealToAllPlayers(deck)
-        this.dealer.hitCard(deck)
+        this.dealer.hitCard(deck, this.dealer.hand)
         this.dealToAllPlayers(deck) //Need to go back through and give each player a second card
-        this.dealer.hitCard(deck)
+        this.dealer.hitCard(deck, this.dealer.hand)
          //Dealers 2nd card should be hidden 
          console.log(this.dealer.hand)
         this.dealer.hand[this.dealer.hand.length-1].isFaceup = false
@@ -356,7 +356,7 @@ const blackjack = {
             //Get value of dealers hand
             //Console log dealers hand 
             else {
-                blackjack.dealer.hitCard(blackjack.deck)
+                blackjack.dealer.hitCard(blackjack.deck, blackjack.dealer.hand)
                 blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
                 console.log(`This is the value of the dealer's hand:`)
                 console.log(blackjack.dealer.valueOfHand)
@@ -514,14 +514,16 @@ const blackjack = {
         console.log('Hit!')
         console.log(blackjack.players[0].hand[0][0])
         //Conditional for when cards are split
-        if(blackjack.players[0].hand[0][0].rank === blackjack.players[0].hand[1][0].rank){
-            console.log(blackjack.players[0].hand[0][0])
-            //no the first hurdle is adjusting hitCard function in order to hit whatever hand I need
-            return
+        if (blackjack.players[0].hand[0][0]) {
+            if(blackjack.players[0].hand[0][0].rank === blackjack.players[0].hand[1][0].rank){
+                console.log(blackjack.players[0].hand[0][0])
+                //no the first hurdle is adjusting hitCard function in order to hit whatever hand I need
+                return
+            }
         }
 
         // It will run the hit function on that object 
-        blackjack.players[0].hitCard(blackjack.deck) 
+        blackjack.players[0].hitCard(blackjack.deck, blackjack.players[0].hand) 
 
         // It will then check the value of the object 
         blackjack.getValueOfHand(blackjack.players[0].hand, blackjack.players[0])
@@ -540,21 +542,23 @@ const blackjack = {
     })
     
 standButton.addEventListener('click', (e) => {
-    if(blackjack.players[0].hand[0][0].rank === blackjack.players[0].hand[1][0].rank) { //***  VERY IMPORTANT CONDITONAL PHRASE
+    if(blackjack.players[0].hand[0][0]) {
+        if(blackjack.players[0].hand[0][0].rank === blackjack.players[0].hand[1][0].rank) { //***  VERY IMPORTANT CONDITONAL PHRASE
 
-        //NOw that we have the conditional that we need What next?
-        // We need to either use the hit button we have or replace it with another that will let us manipulate the second hand 
-        // We basically want to do whatever is needed to make second hand pushable. 
-       console.log("This works!, Moving on to next card")
-        blackjack.completeHand(blackjack.players[0].hand[0])
-        // if(blackjack.players[0].hand[0][0].isHandComplete === true) {
-        //     blackjack.completeHand(blackjack.players[0].hand[1])
-        //     blackjack.endATurn()
-        //     blackjack.startATurn()
-        //     return
-        // }
-        blackjack.startATurn()
-        return
+            //NOw that we have the conditional that we need What next?
+            // We need to either use the hit button we have or replace it with another that will let us manipulate the second hand 
+            // We basically want to do whatever is needed to make second hand pushable. 
+        console.log("This works!, Moving on to next card")
+            blackjack.completeHand(blackjack.players[0].hand[0])
+            // if(blackjack.players[0].hand[0][0].isHandComplete === true) {
+            //     blackjack.completeHand(blackjack.players[0].hand[1])
+            //     blackjack.endATurn()
+            //     blackjack.startATurn()
+            //     return
+            // }
+            blackjack.startATurn()
+            return
+        }
     }
     blackjack.completeHand(blackjack.players[0].hand)
     blackjack.endATurn()
