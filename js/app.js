@@ -206,16 +206,17 @@ const blackjack = {
         }
     },
     getValueOfHandwithSplit(hand, player) {
-        if (blackjack.players[0].hand[0][0]) {
-            if(blackjack.players[0].hand[0][0].isHandComplete === false){
-                player.valueOfHand[0] = 0
-                console.log(player)
-        // console.log(`This is the value of Players hand: ${player.valueOfHand}`)
-            }
-            else if(blackjack.players[0].hand[0][0].isHandComplete === true) {
-                player.valueOfHand[1] = 0
-            }
-        }
+        // if (blackjack.players[0].hand[0][0]) {
+        //     if(blackjack.players[0].hand[0][0].isHandComplete === false){
+        //         player.valueOfHand[0] = 0
+        //         console.log(player)
+        // // console.log(`This is the value of Players hand: ${player.valueOfHand}`)
+        //     }
+        //     else if(blackjack.players[0].hand[0][0].isHandComplete === true) {
+        //         player.valueOfHand[1] = 0
+        //     }
+        // }
+        blackjack.determineCorrectValueInSplit(player)
 
 
         if (blackjack.players[0].hand[0][0]) {
@@ -234,6 +235,7 @@ const blackjack = {
                 if(blackjack.players[0].hand[0][0].isHandComplete === false){
                     // console.log(player.hand.indexOf(hand))
                     player.valueOfHand[0] += valueOfCard
+                    console.log(blackjack.players[0].valueOfHand)
                     console.log(player)
 
                 for (let i = 0; i < hand.length; i++) {
@@ -270,7 +272,19 @@ const blackjack = {
             // }
         }
     },
-   
+
+    determineCorrectValueInSplit(player) {
+        if (blackjack.players[0].hand[0][0]) {
+            if(blackjack.players[0].hand[0][0].isHandComplete === false){
+                player.valueOfHand[0] = 0
+                console.log(player)
+        // console.log(`This is the value of Players hand: ${player.valueOfHand}`)
+            }
+            else if(blackjack.players[0].hand[0][0].isHandComplete === true) {
+                player.valueOfHand[1] = 0
+            }
+        }
+    },
     startATurn () { //This function will let player know it is their turn and they can play
         
         //Increasing counter
@@ -325,22 +339,17 @@ const blackjack = {
                     console.log(blackjack.players[i].hand)
     
                 }
-            
-    
                 //we want to compare those values(This should be a separate function)
                     //Once compare, we determine a winner of round.
                     //Issue points to winner. 
                     //Points will be held inside the player object.
     
             }
-            //If value of hand is lower than 16:
-            //We want to hit 
-            //Get value of dealers hand
-            //Console log dealers hand 
-            else {
-                blackjack.dealer.hitCard(blackjack.deck, blackjack.dealer.hand)
-                blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
-                console.log(`This is the value of the dealer's hand:`)
+            else { //If value of hand is lower than 16:
+            
+                blackjack.dealer.hitCard(blackjack.deck, blackjack.dealer.hand)  //We want to hit 
+                blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer) //Get value of dealers hand
+                console.log(`This is the value of the dealer's hand:`) //Console log dealers hand 
                 console.log(blackjack.dealer.valueOfHand)
                 console.log(`Dealer's hand:`)
                 console.log(blackjack.dealer.hand)
@@ -423,10 +432,11 @@ const blackjack = {
 
                     if(blackjack.players[0].valueOfHand[0] > 21) {
                         console.log('That is a bust! End of turn!')
-                        blackjack.players[0].hand[0].forEach(card => {
-                        card.isHandComplete = true
+                        blackjack.completeHand(blackjack.players[0].hand[0])
+                        // blackjack.players[0].hand[0].forEach(card => {
+                        // card.isHandComplete = true
                         
-                        });
+                        // });
                         console.log('End of first split')
                         console.log(blackjack.players[0].hand[0])
                         // blackjack.endATurn()
@@ -443,14 +453,11 @@ const blackjack = {
                     
                     if(blackjack.players[0].valueOfHand[1] > 21) {
                         console.log('That is a bust! End of turn!')
-                        blackjack.players[0].hand[1].forEach(card => {
-                        card.isHandComplete = true
-                        
-                        });
+                        blackjack.completeHand(blackjack.players[0].hand[0])
                         console.log('End of second split')
                         console.log(blackjack.players[0].hand[0])
-                        // blackjack.endATurn()
-                        // blackjack.startATurn()
+                        blackjack.endATurn()
+                        blackjack.startATurn()
                     }
 
 
