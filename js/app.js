@@ -187,7 +187,7 @@ const blackjack = {
             console.log(this.ranks[i])
             for(let j = 0; j < this.suits.length; j++ ) {
             // for (const suit of suits) {
-                this.deck.push({rank: `${this.ranks[i]}`, suit:`${this.suits[j]}`, value: 0, isFaceup: true}) //Make this into an object
+                this.deck.push({rank: `${this.ranks[i]}`, suit:`${this.suits[j]}`, value: 0, isFaceup: true,isHandComplete: false}) //Make this into an object
                 if (this.ranks[i] === 'King' || this.ranks[i] === 'Jack' || this.ranks[i] === 'Queen' ) {
                                 // console.log(`Inside of King If Statement: ${rankOfCard}`)
                                 // console.log(player.valueOfHand)
@@ -280,10 +280,10 @@ const blackjack = {
 
         //if the typeOf on the second element in the hand array is a array then do the split 
 
-        if ((this.currentplayersTurn !== 0 ) && typeof this.player[this.currentplayersTurn - 1].hand[1][0] === "array"){
-            splitButton.disabled = true
-            console.log(his.player[this.currentplayersTurn - 1].hand[1][0])
-        }
+        // if ((this.currentplayersTurn !== 0 ) && typeof this.player[this.currentplayersTurn - 1].hand[1][0] === "array"){
+        //     splitButton.disabled = true
+        //     console.log(his.player[this.currentplayersTurn - 1].hand[1][0])
+        // }
         
         //Increasing counter
         this.currentplayersTurn = this.currentplayersTurn+=1
@@ -365,7 +365,13 @@ const blackjack = {
                 this.runDealersTurn()
             }
         }
+    },
+    completeHand (hand) {
+        for (let i = 0; i < hand.length; i++) {
+            hand[i].isHandComplete = true
+        }
     }
+
 
     // standonHand(players, dealer) {
     //     if (this.playersNumber < players.length -1) {
@@ -506,6 +512,14 @@ const blackjack = {
 
     hitButton.addEventListener('click', () => { // Hit button is associated to player 1
         console.log('Hit!')
+        console.log(blackjack.players[0].hand[0][0])
+        //Conditional for when cards are split
+        if(blackjack.players[0].hand[0][0].rank === blackjack.players[0].hand[1][0].rank){
+            console.log(blackjack.players[0].hand[0][0])
+            //no the first hurdle is adjusting hitCard function in order to hit whatever hand I need
+            return
+        }
+
         // It will run the hit function on that object 
         blackjack.players[0].hitCard(blackjack.deck) 
 
@@ -526,10 +540,23 @@ const blackjack = {
     })
     
 standButton.addEventListener('click', (e) => {
-    if(blackjack.players[0].splitHand.length === 1) {
+    if(blackjack.players[0].hand[0][0].rank === blackjack.players[0].hand[1][0].rank) { //***  VERY IMPORTANT CONDITONAL PHRASE
+
+        //NOw that we have the conditional that we need What next?
+        // We need to either use the hit button we have or replace it with another that will let us manipulate the second hand 
+        // We basically want to do whatever is needed to make second hand pushable. 
+       console.log("This works!, Moving on to next card")
+        blackjack.completeHand(blackjack.players[0].hand[0])
+        // if(blackjack.players[0].hand[0][0].isHandComplete === true) {
+        //     blackjack.completeHand(blackjack.players[0].hand[1])
+        //     blackjack.endATurn()
+        //     blackjack.startATurn()
+        //     return
+        // }
         blackjack.startATurn()
         return
     }
+    blackjack.completeHand(blackjack.players[0].hand)
     blackjack.endATurn()
     blackjack.startATurn()
 
@@ -615,3 +642,9 @@ blackjack.startATurn()
 
 
 //Making event listeners for buttons
+
+const completeHand = (hand) => {
+    for (let i = 0; i < hand.length; i++) {
+        hand[i].isHandComplete = true
+    }
+}
