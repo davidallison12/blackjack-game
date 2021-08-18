@@ -260,8 +260,9 @@ const blackjack = {
             let rankOfCard = card.rank
             let valueOfCard = card.value
             // console.log(`This is the card's rank: ${rankOfCard}`)
+            
             player.valueOfHand += valueOfCard
-            // console.log(`This is the value of Players hand: ${player.valueOfHand}`)
+
         }
         for (let i = 0; i < hand.length; i++) {
             if ((player.valueOfHand > 21 && hand[i].rank === 'Ace') && hand[i].value === 11) {
@@ -270,6 +271,68 @@ const blackjack = {
             }
         }
     },
+    getValueOfHandwithSplit(hand, player) {
+        if (blackjack.players[0].hand[0][0]) {
+            if(blackjack.players[0].hand[0][0].isHandComplete === false){
+                player.valueOfHand[0] = 0
+                console.log(player)
+        // console.log(`This is the value of Players hand: ${player.valueOfHand}`)
+            }
+            else if(blackjack.players[0].hand[0][0].isHandComplete === true) {
+                player.valueOfHand[1] = 0
+            }
+        }
+
+
+        if (blackjack.players[0].hand[0][0]) {
+            if(blackjack.players[0].hand[0][0].isHandComplete === false){
+
+                player.valueOfHand[0] 
+                console.log(player)
+        // console.log(`This is the value of Players hand: ${player.valueOfHand}`)
+            }
+        // console.log(hand)
+        for(const card of hand) {
+            let rankOfCard = card.rank
+            let valueOfCard = card.value
+            // console.log(`This is the card's rank: ${rankOfCard}`)
+            if (blackjack.players[0].hand[0][0]) {
+                if(blackjack.players[0].hand[0][0].isHandComplete === false){
+                    // console.log(player.hand.indexOf(hand))
+                    player.valueOfHand[0] += valueOfCard
+                    console.log(player)
+                for (let i = 0; i < hand.length; i++) {
+                    if ((player.valueOfHand[0] > 21 && hand[i].rank === 'Ace') && hand[i].value === 11) {
+                            hand[i].value = 1
+                            this.getValueOfHand(hand, player)
+                    }
+                }
+            // console.log(`This is the value of Players hand: ${player.valueOfHand}`)
+                }
+                else if(blackjack.players[0].hand[0][0].isHandComplete === true) {
+                    player.valueOfHand[1] += valueOfCard
+                    console.log(player)
+
+                    for (let i = 0; i < hand.length; i++) {
+                        if ((player.valueOfHand[1] > 21 && hand[i].rank === 'Ace') && hand[i].value === 11) {
+                            hand[i].value = 1
+                            this.getValueOfHand(hand, player)
+                        }
+                    }
+                }
+            }
+          
+            // console.log(`This is the value of Players hand: ${player.valueOfHand}`)
+        }
+            // for (let i = 0; i < hand.length; i++) {
+            //     if ((player.valueOfHand > 21 && hand[i].rank === 'Ace') && hand[i].value === 11) {
+            //         hand[i].value = 1
+            //         this.getValueOfHand(hand, player)
+            //     }
+            // }
+        }
+    },
+   
     startATurn () { //This function will let player know it is their turn and they can play
         // Will include:
         //Adding conditonal to only do counter when a player turn is done not if they have a split hand 
@@ -512,10 +575,29 @@ const blackjack = {
 
     hitButton.addEventListener('click', () => { // Hit button is associated to player 1
         console.log('Hit!')
-        console.log(blackjack.players[0].hand[0][0])
+        // console.log(blackjack.players[0].hand[0][0])
         //Conditional for when cards are split
         if (blackjack.players[0].hand[0][0]) {
             if(blackjack.players[0].hand[0][0].rank === blackjack.players[0].hand[1][0].rank){
+                console.log('We are in the split')
+                if(blackjack.players[0].hand[0][0].isHandComplete === false){
+                    blackjack.players[0].hitCard(blackjack.deck, blackjack.players[0].hand[0])
+                    //This needs to hit a card and do essentially everything the standard is doing. 
+                    blackjack.getValueOfHandwithSplit(blackjack.players[0].hand[0], blackjack.players[0])
+                    if(blackjack.players[0].valueOfHand[0] > 21) {
+                        console.log('That is a bust! End of turn!')
+                        blackjack.players[0].hand[0].forEach(card => {
+                        card.isHandComplete = true
+                        
+                        });
+                        console.log('End of first split')
+                        console.log(blackjack.players[0].hand[0])
+                        // blackjack.endATurn()
+                        // blackjack.startATurn()
+                    }
+
+                    return
+                }
                 console.log(blackjack.players[0].hand[0][0])
                 //no the first hurdle is adjusting hitCard function in order to hit whatever hand I need
                 return
@@ -586,6 +668,8 @@ standButton.addEventListener('click', (e) => {
         blackjack.players[0].hand.unshift([])
         console.log(blackjack.players[0].hand)
         blackjack.players[0].hand[0].push(splitCard)
+        blackjack.players[0].valueOfHand = [0, 0]
+        console.log(blackjack.players[0].valueOfHand)
         
     }
     
@@ -646,9 +730,3 @@ blackjack.startATurn()
 
 
 //Making event listeners for buttons
-
-const completeHand = (hand) => {
-    for (let i = 0; i < hand.length; i++) {
-        hand[i].isHandComplete = true
-    }
-}
