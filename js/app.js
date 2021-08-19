@@ -827,14 +827,14 @@ blackjack.startATurn()
 
 //Identifying Card based off of object. 
 
-const identifyCard = (rank, suit) => {
-    //Card objects have rank and suit 
-    // Can identify by concatinating the first character of rank and suit together.
+// const identifyCard = (rank, suit) => {
+//     //Card objects have rank and suit 
+//     // Can identify by concatinating the first character of rank and suit together.
 
-    let cardImage = `${rank[0]}${suit[0]}`
-    console.log(cardImage)
-    return cardImage
-}
+//     let cardImage = `${rank[0]}${suit[0]}`
+//     console.log(cardImage)
+//     return cardImage
+// }
 
 //Now that I can identify a card, I need that card to appear on the page. 
 
@@ -843,7 +843,13 @@ const card = {
     suit: "Diamonds",
     image:"AD"
 }
-const appendCard = (card) => {
+
+
+const player1 ={
+    playerNumber: 1
+
+}
+const createCard = (card) => {
     
     //if the button is click: 
     // We will create a div that will hold the card image inside it as an image tag
@@ -860,14 +866,23 @@ const appendCard = (card) => {
     newImage.className = 'playing-card'
 
     return newDiv.appendChild(newImage)
-
-
 }
 
 // identifyCard("Ace", "Diamonds")
-appendCard(card)
 
-document.querySelector('#player1-div').appendChild(appendCard(card))
+
+const appendCard = (player, card) => {
+    if (player.name === "dealer") {
+        document.querySelector('dealer-div').appendChild(appendCard(card))
+    }
+    document.querySelector(`#player${player.playerNumber}-div`).appendChild(createCard(card))
+}
+
+
+
+appendCard(player1,card)
+
+// document.querySelector('#player1-div').appendChild(appendCard(card))
 
 
 
