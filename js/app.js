@@ -177,7 +177,7 @@ const blackjack = {
             console.log(this.ranks[i])
             for(let j = 0; j < this.suits.length; j++ ) {
             // for (const suit of suits) {
-                this.deck.push({rank: `${this.ranks[i]}`, suit:`${this.suits[j]}`, value: 0, isFaceup: true,isHandComplete: false}) //Make this into an object
+                this.deck.push({rank: `${this.ranks[i]}`, suit:`${this.suits[j]}`, value: 0, isFaceup: true,isHandComplete: false, image:`${this.ranks[0]}${this.suits[0]}`}) //Make this into an object
                 if (this.ranks[i] === 'King' || this.ranks[i] === 'Jack' || this.ranks[i] === 'Queen' ) {
                                 // console.log(`Inside of King If Statement: ${rankOfCard}`)
                                 // console.log(player.valueOfHand)
@@ -832,11 +832,42 @@ const identifyCard = (rank, suit) => {
     // Can identify by concatinating the first character of rank and suit together.
 
     let cardImage = `${rank[0]}${suit[0]}`
+    console.log(cardImage)
     return cardImage
 }
 
+//Now that I can identify a card, I need that card to appear on the page. 
 
-identifyCard("Ace", "Diamonds")
+const card = {
+    rank: "Ace",
+    suit: "Diamonds",
+    image:"AD"
+}
+const appendCard = (card) => {
+    
+    //if the button is click: 
+    // We will create a div that will hold the card image inside it as an image tag
+    // This way if we need to split the cards they can be seperate. 
+
+    // console.log(identifyCard(card.rank, card.suit))
+    //Making image div container
+    let newDiv = document.createElement('div')
+    newDiv.className = 'playing-card-image-container'
+
+    let newImage = document.createElement('img')
+    newImage.src = `./images/${card.image}.png`
+    newImage.alt = `${card.rank} of ${card.suit}`
+    newImage.className = 'playing-card'
+
+    return newDiv.appendChild(newImage)
+
+
+}
+
+// identifyCard("Ace", "Diamonds")
+appendCard(card)
+
+document.querySelector('#player1-div').appendChild(appendCard(card))
 
 
 

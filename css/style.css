@@ -39,3 +39,8 @@ main {
 
 }
 
+/* Playing Cards */
+
+.playing-card {
+    height: 25vh;
+}
