@@ -50,6 +50,7 @@ class Dealer {
         this.faceDownCard = null
         this.valueOfHand = 0
         this.playerNumber = 0 // On the backend 0 will be first player to align with array index
+        this.NumberOfWins = 0
     }
     hitCard(deck, hand) {
        let selectedCard = deck.splice(Math.floor(Math.random() * deck.length), 1).pop() //This takes a random card out of the deck and makes it a string instead of array.
@@ -114,6 +115,7 @@ const blackjack = {
     ranks: ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"],
     suits: ["Clubs", "Diamonds", "Hearts", "Spades"],
     cardNumber: 0,
+    roundsPlayer:0,
     createDeck(){
         // let cardNumber = 0
         for (let i = 0; i < this.ranks.length; i++){
@@ -177,16 +179,30 @@ const blackjack = {
             this.players[i].hitCard(deck, this.players[i].hand)
             }
     },
-    dealCardsToStart(deck) {
-        this.dealToAllPlayers(deck)
-        this.dealer.hitCard(deck, this.dealer.hand)
-        this.dealToAllPlayers(deck) //Need to go back through and give each player a second card
-        this.dealer.hitCard(deck, this.dealer.hand)
-         //Dealers 2nd card should be hidden 
-         console.log(this.dealer.hand)
-        this.dealer.hand[this.dealer.hand.length-1].isFaceup = false
+    // dealCardsToStart(deck) {
+    //     this.dealToAllPlayers(deck)
+    //     this.dealer.hitCard(deck, this.dealer.hand)
+    //     this.dealToAllPlayers(deck) //Need to go back through and give each player a second card
+    //     this.dealer.hitCard(deck, this.dealer.hand)
+    //      //Dealers 2nd card should be hidden 
+    //     console.log(this.dealer.hand)
+    //     this.dealer.hand[this.dealer.hand.length-1].isFaceup = false
 
-    },
+
+    //     let dealersTotal = this.getValueOfHand(this.dealer.hand, this.dealer)
+    //     console.log(this.getValueOfHand(this.dealer.hand, this.dealer))
+    //     // this.players.forEach(player => {
+    //     //     let playerTotal =  this.getValueOfHand(player.hand, player)
+    //     //     if(playerTotal === 21) {
+    //     //         console.log(`BLACKJACK ${player.name}`)
+    //     //         determineWinner()
+    //     //     }
+    //     // })
+    //     if(dealersTotal === 21) {
+    //         console.log('BLACKJACK DEALER')
+    //         determineWinner()
+    //     }
+    // },
     getValueOfHand(hand, player) {
         player.valueOfHand = 0 //Setting to 0 to read hand with clean start
         // console.log(hand)
@@ -203,6 +219,30 @@ const blackjack = {
                 hand[i].value = 1
                 this.getValueOfHand(hand, player)
             }
+        }
+    },
+    dealCardsToStart(deck) {
+        this.dealToAllPlayers(deck)
+        this.dealer.hitCard(deck, this.dealer.hand)
+        this.dealToAllPlayers(deck) //Need to go back through and give each player a second card
+        this.dealer.hitCard(deck, this.dealer.hand)
+         //Dealers 2nd card should be hidden 
+        console.log(this.dealer.hand)
+        this.dealer.hand[this.dealer.hand.length-1].isFaceup = false
+
+
+        let dealersTotal = this.getValueOfHand(this.dealer.hand,this.dealer)
+        console.log(this.getValueOfHand(this.dealer.hand,this.dealer))
+        // this.players.forEach(player => {
+        //     let playerTotal =  this.getValueOfHand(player.hand, player)
+        //     if(playerTotal === 21) {
+        //         console.log(`BLACKJACK ${player.name}`)
+        //         determineWinner()
+        //     }
+        // })
+        if(dealersTotal === 21) {
+            console.log('BLACKJACK DEALER')
+            determineWinner()
         }
     },
     getValueOfHandwithSplit(hand, player) {
@@ -354,13 +394,12 @@ const blackjack = {
                     console.log(blackjack.players[i].valueOfHand)
                     console.log(`${blackjack.players[i].playerNumber}'s hand:`)
                     console.log(blackjack.players[i].hand)
-    
+                    determineWinner()
                 }
                 //we want to compare those values(This should be a separate function)
                     //Once compare, we determine a winner of round.
                     //Issue points to winner. 
                     //Points will be held inside the player object.
-    
             }
             else { //If value of hand is lower than 16:
             
@@ -372,7 +411,9 @@ const blackjack = {
                 console.log(blackjack.dealer.hand)
                 this.runDealersTurn()
             }
+            
         }
+        
     },
     completeHand (hand) {
         for (let i = 0; i < hand.length; i++) {
@@ -382,6 +423,63 @@ const blackjack = {
 
 
 }
+
+//===================
+// Determine a Winner
+//===================
+
+//Determine Winner Function 
+const determineWinner = () => {
+    // What needs to happen:
+    //All players will be compared to the dealer seperately 
+    // We will then determine if that players hand beats the dealers 
+    // A point will be issued or taken away after that is determined
+
+    //In splits we will need to compare both hands to the dealers
+
+    blackjack.players.forEach(player =>{ 
+        if ((player.valueOfHand > 21 && blackjack.dealer.valueOfHand > 21) || (player.valueOfHand === blackjack.dealer.valueOfHand)) {
+            console.log(player)
+            console.log('This round is a draw! No points will be issued!') //No points issued 
+        }
+        else if(player.valueOfHand > 21 && blackjack.dealer.valueOfHand <= 21) {
+            console.log(player)
+            console.log('You lose this round. The dealer gets a point and you lose a point.')
+        }
+        else if (player.valueOfHand <= 21 && blackjack.dealer.valueOfHand <= 21) {
+            if (player.valueOfHand > blackjack.dealer.valueOfHand) {
+                console.log(player)
+                console.log(`${player.name} wins this round! The dealer loses a point and ${player.name} gets a point.`)
+            }
+            else if(player.valueOfHand < blackjack.dealer.valueOfHand) {
+            console.log(player)
+
+                console.log(`${player.name} loses this round! The dealer gets a point and ${player.name} loses a point.`)
+            }
+        }
+   
+    })
+}
+
+// const determineTrueBlackjack = () => {
+//     if(blackjack.currentplayersTurn === 0) {
+//         let dealersTotal =  blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
+//         blackjack.players.map(player =>{
+//            let playerTotal = blackjack.getValueOfHand(player.hand, player)
+//            return playerTotal
+//        })
+//     //    if (dealersTotal === 21 && )
+        
+// }
+// }
+//Issue out Points
+
+
+
+//===================
+// Start a New Round of the game
+//===================
+
 
 //===================
 // Taking a Turn
@@ -617,4 +715,4 @@ blackjack.startATurn()
 // As a player, I would like the cards to be presented on the UI
 
 
-//Making event listeners for buttons
+//Making event listeners for 
