@@ -28,6 +28,58 @@ const standButton = document.querySelector('#player1-stand-button')
 const splitButton = document.querySelector('#player1-split-card-button')
 
 
+//===================
+// Determine a Winner
+//===================
+
+//Determine Winner Function 
+// const determineWinner = () => {
+//     // What needs to happen:
+//     //All players will be compared to the dealer seperately 
+//     // We will then determine if that players hand beats the dealers 
+//     // A point will be issued or taken away after that is determined
+
+//     //In splits we will need to compare both hands to the dealers
+//     if(blackjack.currentplayersTurn === 0 ){
+//         console.log('IM HERE!!!')
+//     let dealersTotal = getValueOfHand(blackjack.dealer.hand,blackjack.dealer)
+//         console.log (getValueOfHand(blackjack.dealer.hand,blackjack.dealer))
+//         // this.players.forEach(player => {
+//         //     let playerTotal =  this.getValueOfHand(player.hand, player)
+//         //     if(playerTotal === 21) {
+//         //         console.log(`BLACKJACK ${player.name}`)
+//         //         determineWinner()
+//         //     }
+//         // })
+//         if(dealersTotal === 21) {
+//             console.log('BLACKJACK DEALER')
+//             determineWinner()
+//         }}
+
+//     blackjack.players.forEach(player =>{ 
+//         if ((player.valueOfHand > 21 && blackjack.dealer.valueOfHand > 21) || (player.valueOfHand === blackjack.dealer.valueOfHand)) {
+//             console.log(player)
+//             console.log('This round is a draw! No points will be issued!') //No points issued 
+//         }
+//         else if(player.valueOfHand > 21 && blackjack.dealer.valueOfHand <= 21) {
+//             console.log(player)
+//             console.log('You lose this round. The dealer gets a point and you lose a point.')
+//         }
+//         else if (player.valueOfHand <= 21 && blackjack.dealer.valueOfHand <= 21) {
+//             if (player.valueOfHand > blackjack.dealer.valueOfHand) {
+//                 console.log(player)
+//                 console.log(`${player.name} wins this round! The dealer loses a point and ${player.name} gets a point.`)
+//             }
+//             else if(player.valueOfHand < blackjack.dealer.valueOfHand) {
+//             console.log(player)
+
+//                 console.log(`${player.name} loses this round! The dealer gets a point and ${player.name} loses a point.`)
+//             }
+//         }
+   
+//     })
+// }
+
 
 
 //Dealer Functionality
@@ -207,7 +259,7 @@ const blackjack = {
         player.valueOfHand = 0 //Setting to 0 to read hand with clean start
         // console.log(hand)
         for(const card of hand) {
-            let rankOfCard = card.rank
+            // let rankOfCard = card.rank
             let valueOfCard = card.value
             // console.log(`This is the card's rank: ${rankOfCard}`)
             
@@ -220,6 +272,7 @@ const blackjack = {
                 this.getValueOfHand(hand, player)
             }
         }
+        return player.valueOfHand
     },
     dealCardsToStart(deck) {
         this.dealToAllPlayers(deck)
@@ -229,17 +282,18 @@ const blackjack = {
          //Dealers 2nd card should be hidden 
         console.log(this.dealer.hand)
         this.dealer.hand[this.dealer.hand.length-1].isFaceup = false
+        determineWinner()
 
 
         let dealersTotal = this.getValueOfHand(this.dealer.hand,this.dealer)
         console.log(this.getValueOfHand(this.dealer.hand,this.dealer))
-        // this.players.forEach(player => {
-        //     let playerTotal =  this.getValueOfHand(player.hand, player)
-        //     if(playerTotal === 21) {
-        //         console.log(`BLACKJACK ${player.name}`)
-        //         determineWinner()
-        //     }
-        // })
+        this.players.forEach(player => {
+            let playerTotal =  this.getValueOfHand(player.hand, player)
+            if(playerTotal === 21) {
+                console.log(`BLACKJACK ${player.name}`)
+                determineWinner()
+            }
+        })
         if(dealersTotal === 21) {
             console.log('BLACKJACK DEALER')
             determineWinner()
@@ -266,6 +320,7 @@ const blackjack = {
                             this.getValueOfHandwithSplit(hand, player)
                     }
                 }
+                return player.valueOfHand[0]
                 }
                 else if(blackjack.players[0].hand[0][0].isHandComplete === true) {
                     console.log(blackjack.players[0].valueOfHand)
@@ -279,6 +334,8 @@ const blackjack = {
                             this.getValueOfHandwithSplit(hand, player)
                         }
                     }
+                return player.valueOfHand[1]
+
                 }
             }
         }
@@ -424,12 +481,29 @@ const blackjack = {
 
 }
 
+
+
+// const determineTrueBlackjack = () => {
+//     if(blackjack.currentplayersTurn === 0) {
+//         let dealersTotal =  blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
+//         blackjack.players.map(player =>{
+//            let playerTotal = blackjack.getValueOfHand(player.hand, player)
+//            return playerTotal
+//        })
+//     //    if (dealersTotal === 21 && )
+        
+// }
+// }
+//Issue out Points
+
+
+
 //===================
 // Determine a Winner
 //===================
 
 //Determine Winner Function 
-const determineWinner = () => {
+function determineWinner () {
     // What needs to happen:
     //All players will be compared to the dealer seperately 
     // We will then determine if that players hand beats the dealers 
@@ -460,19 +534,6 @@ const determineWinner = () => {
    
     })
 }
-
-// const determineTrueBlackjack = () => {
-//     if(blackjack.currentplayersTurn === 0) {
-//         let dealersTotal =  blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
-//         blackjack.players.map(player =>{
-//            let playerTotal = blackjack.getValueOfHand(player.hand, player)
-//            return playerTotal
-//        })
-//     //    if (dealersTotal === 21 && )
-        
-// }
-// }
-//Issue out Points
 
 
 
