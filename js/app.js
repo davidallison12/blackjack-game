@@ -821,3 +821,23 @@ blackjack.startATurn()
 
 
 //Making event listeners for 
+//===========================
+// Getting cards to appear on page 
+//===========================
+
+//Identifying Card based off of object. 
+
+const identifyCard = (rank, suit) => {
+    //Card objects have rank and suit 
+    // Can identify by concatinating the first character of rank and suit together.
+
+    let cardImage = `${rank[0]}${suit[0]}`
+    return cardImage
+}
+
+
+identifyCard("Ace", "Diamonds")
+
+
+
+
