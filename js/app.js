@@ -26,6 +26,7 @@
 const hitButton = document.querySelector('#player1-hit-card-button')
 const standButton = document.querySelector('#player1-stand-button')
 const splitButton = document.querySelector('#player1-split-card-button')
+const playAgainButton = document.querySelector('#play-new-round')
 
 
 //===================
@@ -168,6 +169,7 @@ const blackjack = {
     suits: ["Clubs", "Diamonds", "Hearts", "Spades"],
     cardNumber: 0,
     roundsPlayer:0,
+    roundsPlayed: 0,
     createDeck(){
         // let cardNumber = 0
         for (let i = 0; i < this.ranks.length; i++){
@@ -258,7 +260,6 @@ const blackjack = {
          //Dealers 2nd card should be hidden 
         console.log(this.dealer.hand)
         this.dealer.hand[this.dealer.hand.length-1].isFaceup = false
-        determineWinner()
 
 
         let dealersTotal = this.getValueOfHand(this.dealer.hand,this.dealer)
@@ -296,7 +297,7 @@ const blackjack = {
                             this.getValueOfHandwithSplit(hand, player)
                     }
                 }
-                return player.valueOfHand[0]
+                // return player.valueOfHand[0]
                 }
                 else if(blackjack.players[0].hand[0][0].isHandComplete === true) {
                     console.log(blackjack.players[0].valueOfHand)
@@ -310,7 +311,7 @@ const blackjack = {
                             this.getValueOfHandwithSplit(hand, player)
                         }
                     }
-                return player.valueOfHand[1]
+                // return player.valueOfHand[1]
 
                 }
             }
@@ -387,6 +388,9 @@ const blackjack = {
         
             // Enabling buttons
             document.querySelector(`#player${this.currentplayersTurn}-stand-button`).disabled = false
+            document.querySelector(`#player${this.currentplayersTurn}-hit-card-button`).disabled = false
+            document.querySelector(`#player${this.currentplayersTurn}-split-card-button`).disabled = false
+
             console.log(this.players[0].hand)
             //Also include situation for if it is a split
             if(this.players[this.currentplayersTurn - 1].hand[0].rank !== this.players[this.currentplayersTurn - 1].hand[1].rank) {
@@ -488,6 +492,41 @@ function determineWinner () {
     //In splits we will need to compare both hands to the dealers
 
     blackjack.players.forEach(player =>{ 
+        if(player.valueOfHand[1]) {
+            player.valueOfHand.forEach(hand => {
+                if ((hand > 21 && blackjack.dealer.valueOfHand > 21) || (hand === blackjack.dealer.valueOfHand)) {
+                    console.log(player)
+                    console.log('This hand is a draw! No points will be issued!') //No points issued 
+                }
+                else if(hand > 21 && blackjack.dealer.valueOfHand <= 21) {
+                    console.log(player)
+                    console.log('You lose this hand. The dealer gets a point and you lose a point.')
+                    blackjack.dealer.NumberOfWins++
+                    player.NumberOfWins--
+                }
+                else if(hand <= 21 && blackjack.dealer.valueOfHand > 21) {
+                    console.log(player)
+                    console.log(`${player.name} wins this hand The dealer loses a point and ${player.name} gets a point.`)
+                    blackjack.dealer.NumberOfWins--
+                    player.NumberOfWins++
+                }
+                else if (hand <= 21 && blackjack.dealer.valueOfHand <= 21) {
+                    if (player.valueOfHand > blackjack.dealer.valueOfHand) {
+                        console.log(player)
+                        console.log(`${player.name} wins this hand! The dealer loses a point and ${player.name} gets a point.`)
+                        blackjack.dealer.NumberOfWins--
+                        player.NumberOfWins++
+                    }
+                    else if(hand < blackjack.dealer.valueOfHand) {
+                        console.log(player)
+                        console.log(`${player.name} loses this hand! The dealer gets a point and ${player.name} loses a point.`)
+                        blackjack.dealer.NumberOfWins++
+                        player.NumberOfWins--
+                    }
+                }
+                return
+            })
+        }
         if ((player.valueOfHand > 21 && blackjack.dealer.valueOfHand > 21) || (player.valueOfHand === blackjack.dealer.valueOfHand)) {
             console.log(player)
             console.log('This round is a draw! No points will be issued!') //No points issued 
@@ -497,6 +536,12 @@ function determineWinner () {
             console.log('You lose this round. The dealer gets a point and you lose a point.')
             blackjack.dealer.NumberOfWins++
             player.NumberOfWins--
+        }
+        else if(player.valueOfHand <= 21 && blackjack.dealer.valueOfHand > 21) {
+            console.log(player)
+            console.log(`${player.name} wins this round! The dealer loses a point and ${player.name} gets a point.`)
+            blackjack.dealer.NumberOfWins--
+            player.NumberOfWins++
         }
         else if (player.valueOfHand <= 21 && blackjack.dealer.valueOfHand <= 21) {
             if (player.valueOfHand > blackjack.dealer.valueOfHand) {
@@ -513,7 +558,9 @@ function determineWinner () {
             }
         }
    
+  
     })
+    return
 }
 
 
@@ -527,7 +574,14 @@ function determineWinner () {
      console.log(blackjack.dealer)
      console.log(blackjack.players[0])
      blackjack.dealCardsToStart(blackjack.deck)
+     blackjack.roundsPlayed++
+     blackjack.currentplayersTurn = 0
+     blackjack.startATurn()
  }
+
+ playAgainButton.addEventListener('click', () => {
+     startNewRound()
+ })
 
 //===================
 // Taking a Turn
@@ -697,6 +751,9 @@ standButton.addEventListener('click', (e) => {
  splitButton.addEventListener('click', () => {
     console.log('Split!')
     for(i = 0; i < blackjack.players[0].hand.length; i++) {
+        if(blackjack.players[0].hand[0].rank === 'Ace') {
+            blackjack.players[0].hand.forEach(ace => ace.value = 11)
+        }
         let splitCard = blackjack.players[0].hand.pop()
         console.log(splitCard)
         blackjack.players[0].hand.unshift([])
