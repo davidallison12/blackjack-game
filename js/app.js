@@ -82,6 +82,84 @@ const playAgainButton = document.querySelector('#play-new-round')
 // }
 
 
+//===========================
+// Getting cards to appear on page 
+//===========================
+
+//Identifying Card based off of object. 
+
+// const identifyCard = (rank, suit) => {
+//     //Card objects have rank and suit 
+//     // Can identify by concatinating the first character of rank and suit together.
+
+//     let cardImage = `${rank[0]}${suit[0]}`
+//     console.log(cardImage)
+//     return cardImage
+// }
+
+//Now that I can identify a card, I need that card to appear on the page. 
+
+// const card = {
+//     rank: "Ace",
+//     suit: "Diamonds",
+//     image:"AD"
+// }
+
+
+// const player1 ={
+//     playerNumber: 1
+
+// }
+
+// const dealer = {
+//     name:"dealer"
+// }
+const createCard = (card) => {
+    
+    //if the button is click: 
+    // We will create a div that will hold the card image inside it as an image tag
+    // This way if we need to split the cards they can be seperate. 
+
+    // console.log(identifyCard(card.rank, card.suit))
+    //Making image div container
+    let newDiv = document.createElement('div')
+    newDiv.className = 'playing-card-image-container'
+
+    let newImage = document.createElement('img')
+    newImage.src = `./images/${card.image}.png`
+    newImage.alt = `${card.rank} of ${card.suit}`
+    newImage.className = 'playing-card'
+
+    let completeDiv = newDiv.appendChild(newImage)
+    // return newDiv.appendChild(newImage)
+    return completeDiv
+}
+
+// identifyCard("Ace", "Diamonds")
+
+
+const appendCard = (player, card) => {
+    if (player.name === "dealer") {
+
+        document.querySelector('#dealer-div').appendChild(createCard(card))
+        return
+    }
+    document.querySelector(`#player${player.playerNumber}-div`).appendChild(createCard(card))
+}
+
+
+
+// appendCard(player1,card)
+// appendCard(dealer, card)
+
+// document.querySelector('#player1-div').appendChild(appendCard(card))
+
+
+
+
+
+
+
 
 //Dealer Functionality
 // If dealer's total is 17 or more, they must stand
@@ -107,21 +185,39 @@ class Dealer {
     }
     hitCard(deck, hand) {
        let selectedCard = deck.splice(Math.floor(Math.random() * deck.length), 1).pop() //This takes a random card out of the deck and makes it a string instead of array.
+       this.appendCard(selectedCard)
        hand.push(selectedCard)
     }
 
-    standonHand(players, dealer) {
-        if (this.playersNumber < players.length -1) {
-            // takeATurn(players[playerNumber+1]) 
+    appendCard(card){
+        if (this.name === "dealer") {
+            let newDiv = document.createElement('div')
+            newDiv.className = 'playing-card-image-container'
+            newDiv.appendChild(createCard(card))
+            document.querySelector('#dealer-div').appendChild(newDiv)
+            return
         }
-        else if (this.playersNumber === players.length -1) {
-            // takeATurn(dealer)
-        }
-        else if(this.name = 'dealer') {
-            console.log('Who won?') // Winner function will go in here 
-        }
+        let newDiv = document.createElement('div')
+        newDiv.className = 'playing-card-image-container'
+        newDiv.appendChild(createCard(card))
+        document.querySelector(`#player${this.playerNumber}-div`).appendChild(newDiv)
     }
 
+    removeCards() {
+        if (this.name === "dealer") {
+            for(let i= 0; i < this.hand.length; i++) {
+                document.querySelector('.playing-card-image-container').remove()
+                // document.querySelector('#dealer-div').removeChild(document.getElementsByTagName(''))
+            }
+            // this.hand.forEach(card => document.querySelector('#dealer-div').removeChild(document.getElementsByTagName('div')))
+            return
+        }
+        for(let i= 0; i < this.hand.length; i++) {
+            document.querySelector('.playing-card-image-container').remove()
+            // document.querySelector(`#player${this.playerNumber}-div`).removeChild(document.getElementsByTagName('div'))
+        }
+        return
+    }
 }
 
 
@@ -166,7 +262,7 @@ const blackjack = {
     totalCardHolders: null, //Will be players + dealer
     currentplayersTurn: 0, // Will hold players number (Dealer is amount of players + 1)
     ranks: ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"],
-    suits: ["Clubs", "Diamonds", "Hearts", "Spades"],
+    suits: ["Diamonds","Clubs", "Hearts", "Spades"],
     cardNumber: 0,
     roundsPlayer:0,
     roundsPlayed: 0,
@@ -177,7 +273,9 @@ const blackjack = {
             console.log(this.ranks[i])
             for(let j = 0; j < this.suits.length; j++ ) {
             // for (const suit of suits) {
-                this.deck.push({rank: `${this.ranks[i]}`, suit:`${this.suits[j]}`, value: 0, isFaceup: true,isHandComplete: false, image:`${this.ranks[0]}${this.suits[0]}`}) //Make this into an object
+                this.deck.push({rank: `${this.ranks[i]}`, suit:`${this.suits[j]}`, value: 0, isFaceup: true,isHandComplete: false, image:`${this.ranks[i]==="10" ? this.ranks[i] :  this.ranks[i].split('')[0]}${this.suits[j].split('')[0]}`}) //Make this into an object
+                // image:`${this.ranks[i]}${this.suits[j]}`
+                
                 if (this.ranks[i] === 'King' || this.ranks[i] === 'Jack' || this.ranks[i] === 'Queen' ) {
                                 // console.log(`Inside of King If Statement: ${rankOfCard}`)
                                 // console.log(player.valueOfHand)
@@ -580,7 +678,9 @@ function determineWinner () {
  }
 
  playAgainButton.addEventListener('click', () => {
-     startNewRound()
+    blackjack.dealer.removeCards()
+    blackjack.players[0].removeCards()
+    startNewRound()
  })
 
 //===================
@@ -821,69 +921,3 @@ blackjack.startATurn()
 
 
 //Making event listeners for 
-//===========================
-// Getting cards to appear on page 
-//===========================
-
-//Identifying Card based off of object. 
-
-// const identifyCard = (rank, suit) => {
-//     //Card objects have rank and suit 
-//     // Can identify by concatinating the first character of rank and suit together.
-
-//     let cardImage = `${rank[0]}${suit[0]}`
-//     console.log(cardImage)
-//     return cardImage
-// }
-
-//Now that I can identify a card, I need that card to appear on the page. 
-
-const card = {
-    rank: "Ace",
-    suit: "Diamonds",
-    image:"AD"
-}
-
-
-const player1 ={
-    playerNumber: 1
-
-}
-const createCard = (card) => {
-    
-    //if the button is click: 
-    // We will create a div that will hold the card image inside it as an image tag
-    // This way if we need to split the cards they can be seperate. 
-
-    // console.log(identifyCard(card.rank, card.suit))
-    //Making image div container
-    let newDiv = document.createElement('div')
-    newDiv.className = 'playing-card-image-container'
-
-    let newImage = document.createElement('img')
-    newImage.src = `./images/${card.image}.png`
-    newImage.alt = `${card.rank} of ${card.suit}`
-    newImage.className = 'playing-card'
-
-    return newDiv.appendChild(newImage)
-}
-
-// identifyCard("Ace", "Diamonds")
-
-
-const appendCard = (player, card) => {
-    if (player.name === "dealer") {
-        document.querySelector('dealer-div').appendChild(appendCard(card))
-    }
-    document.querySelector(`#player${player.playerNumber}-div`).appendChild(createCard(card))
-}
-
-
-
-appendCard(player1,card)
-
-// document.querySelector('#player1-div').appendChild(appendCard(card))
-
-
-
-

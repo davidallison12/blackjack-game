@@ -8,10 +8,32 @@ body {
 
 main {
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .blackjack-title {
     padding-top: 10vh;
+
+}
+#dealer-container {
+    height: 30vh;
+    /* width: 2vh; */
+    border: gold solid 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 5vh;
+}
+
+#dealer-div {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    height: 30vh;
+    padding-bottom: 5vh;
 
 }
 
@@ -22,6 +44,8 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-bottom: 5vh;
+
 }
 
 #player1-div {
@@ -29,6 +53,7 @@ main {
     /* justify-content: end; */
     align-items: end;
     height: 30vh;
+    
 
 }
 
