@@ -114,38 +114,34 @@ const playAgainButton = document.querySelector('#play-new-round')
 // const dealer = {
 //     name:"dealer"
 // }
-const createCard = (card) => {
-    
-    //if the button is click: 
-    // We will create a div that will hold the card image inside it as an image tag
-    // This way if we need to split the cards they can be seperate. 
-
-    // console.log(identifyCard(card.rank, card.suit))
-    //Making image div container
-    let newDiv = document.createElement('div')
-    newDiv.className = 'playing-card-image-container'
-
-    let newImage = document.createElement('img')
-    newImage.src = `./images/${card.image}.png`
-    newImage.alt = `${card.rank} of ${card.suit}`
-    newImage.className = 'playing-card'
-
-    let completeDiv = newDiv.appendChild(newImage)
-    // return newDiv.appendChild(newImage)
-    return completeDiv
-}
+// 
 
 // identifyCard("Ace", "Diamonds")
 
 
-const appendCard = (player, card) => {
-    if (player.name === "dealer") {
+// const appendCard = (player, card) => {
+//     if (player.name === "dealer") {
 
-        document.querySelector('#dealer-div').appendChild(createCard(card))
-        return
-    }
-    document.querySelector(`#player${player.playerNumber}-div`).appendChild(createCard(card))
-}
+//         document.querySelector('#dealer-div').appendChild(createCard(card))
+//         return
+//     }
+//     document.querySelector(`#player${player.playerNumber}-div`).appendChild(createCard(card))
+// }
+
+// const handleSplitOnDom = (card) => {
+//     this.removeCards()
+//     for(let i = 0; i < blackjack.hand; i++) {
+//         let newDiv = document.createElement('div')
+//         newDiv.className = 'playing-card-image-container'
+//         newDiv.appendChild(blackjack.createCard(this.hand[i]))
+
+//         let splitDiv = document.createElement('div')
+//         splitDiv.className = 'split-div'
+//         splitDiv.id = `split-div-${this.playerNumber}`
+//         document.querySelector(`#player${this.playerNumber}-div`).appendChild(splitDiv)
+
+//     }
+// }
 
 
 
@@ -192,21 +188,21 @@ class Dealer {
     appendCard(card){
         if (this.name === "dealer") {
             let newDiv = document.createElement('div')
-            newDiv.className = 'playing-card-image-container'
-            newDiv.appendChild(createCard(card))
+            newDiv.className = 'playing-card-image-container-dealer'
+            newDiv.appendChild(blackjack.createCard(card))
             document.querySelector('#dealer-div').appendChild(newDiv)
             return
         }
         let newDiv = document.createElement('div')
         newDiv.className = 'playing-card-image-container'
-        newDiv.appendChild(createCard(card))
+        newDiv.appendChild(blackjack.createCard(card))
         document.querySelector(`#player${this.playerNumber}-div`).appendChild(newDiv)
     }
 
     removeCards() {
         if (this.name === "dealer") {
             for(let i= 0; i < this.hand.length; i++) {
-                document.querySelector('.playing-card-image-container').remove()
+                document.querySelector('.playing-card-image-container-dealer').remove()
                 // document.querySelector('#dealer-div').removeChild(document.getElementsByTagName(''))
             }
             // this.hand.forEach(card => document.querySelector('#dealer-div').removeChild(document.getElementsByTagName('div')))
@@ -235,6 +231,22 @@ class Player extends Dealer {
     }
     splitCards() {
        this.splitHand.push(this.hand.pop())
+    }
+    handleSplitOnDom = (card) => {
+        this.removeCards()
+        for(let i = 0; i < this.hand.length; i++) {
+            let newDiv = document.createElement('div')
+            newDiv.className = 'playing-card-image-container'
+            newDiv.appendChild(blackjack.createCard(this.hand[i]))
+            console.log(newDiv)
+
+            let splitDiv = document.createElement('div')
+            splitDiv.className = 'split-div'
+            splitDiv.id = `split-div-${i}`
+            splitDiv.appendChild(newDiv)
+            document.querySelector(`#player${this.playerNumber}-div`).appendChild(splitDiv)
+    
+        }
     }
 }
 
@@ -373,6 +385,7 @@ const blackjack = {
             console.log('BLACKJACK DEALER')
             determineWinner()
         }
+        return
     },
     getValueOfHandwithSplit(hand, player) {
         blackjack.determineCorrectValueInSplit(player)
@@ -555,6 +568,26 @@ const blackjack = {
             hand[i].isHandComplete = true
         }
     },
+    createCard(card) {
+    
+        //if the button is click: 
+        // We will create a div that will hold the card image inside it as an image tag
+        // This way if we need to split the cards they can be seperate. 
+    
+        // console.log(identifyCard(card.rank, card.suit))
+        //Making image div container
+        let newDiv = document.createElement('div')
+        newDiv.className = 'playing-card-image-container'
+    
+        let newImage = document.createElement('img')
+        newImage.src = `./images/${card.image}.png`
+        newImage.alt = `${card.rank} of ${card.suit}`
+        newImage.className = 'playing-card'
+    
+        let completeDiv = newDiv.appendChild(newImage)
+        // return newDiv.appendChild(newImage)
+        return completeDiv
+    }
 
 
 }
@@ -850,6 +883,8 @@ standButton.addEventListener('click', (e) => {
 //Conditon added to the start turn function will go through the split conditions 
  splitButton.addEventListener('click', () => {
     console.log('Split!')
+    blackjack.players[0].handleSplitOnDom()
+
     for(i = 0; i < blackjack.players[0].hand.length; i++) {
         if(blackjack.players[0].hand[0].rank === 'Ace') {
             blackjack.players[0].hand.forEach(ace => ace.value = 11)
