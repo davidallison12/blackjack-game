@@ -227,7 +227,12 @@ class Dealer {
             return
         }
         for(let i= 0; i < this.hand.length; i++) {
+            if(this.isSplit === true){
+                document.querySelector(`#split-div-${i}`).remove()
+            }
+            else{
             document.querySelector('.playing-card-image-container').remove()
+            }
             // document.querySelector(`#player${this.playerNumber}-div`).removeChild(document.getElementsByTagName('div'))
         }
         return
