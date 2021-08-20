@@ -178,11 +178,14 @@ class Dealer {
         this.valueOfHand = 0
         this.playerNumber = 0 // On the backend 0 will be first player to align with array index
         this.NumberOfWins = 0
+        this.isSplit = false
     }
     hitCard(deck, hand) {
-       let selectedCard = deck.splice(Math.floor(Math.random() * deck.length), 1).pop() //This takes a random card out of the deck and makes it a string instead of array.
-       this.appendCard(selectedCard)
-       hand.push(selectedCard)
+        let selectedCard = deck.splice(Math.floor(Math.random() * deck.length), 1).pop() //This takes a random card out of the deck and makes it a string instead of array.
+        hand.push(selectedCard)
+        if (this.isSplit === false) {
+            this.appendCard(selectedCard)
+       }
     }
 
     appendCard(card){
@@ -193,6 +196,21 @@ class Dealer {
             document.querySelector('#dealer-div').appendChild(newDiv)
             return
         }
+        // if(blackjack.players[0].hand[0][0]) {
+        //     if(blackjack.players[0].hand[0][0].isHandComplete === false){
+        //         let newDiv = document.createElement('div')
+        //         newDiv.className = 'playing-card-image-container'
+        //         newDiv.appendChild(blackjack.createCard(card))
+        //         document.querySelector(`#split-div-0`).appendChild(newDiv)
+        //     }
+        //     else if(blackjack.players[0].hand[0][0].isHandComplete === true) {
+        //         let newDiv = document.createElement('div')
+        //         newDiv.className = 'playing-card-image-container'
+        //         newDiv.appendChild(blackjack.createCard(card))
+        //         document.querySelector(`#split-div-1`).appendChild(newDiv)
+        //     }
+        // }
+
         let newDiv = document.createElement('div')
         newDiv.className = 'playing-card-image-container'
         newDiv.appendChild(blackjack.createCard(card))
@@ -232,6 +250,7 @@ class Player extends Dealer {
     splitCards() {
        this.splitHand.push(this.hand.pop())
     }
+    //Handles the DOM element of splitting once you click the split button
     handleSplitOnDom = (card) => {
         this.removeCards()
         for(let i = 0; i < this.hand.length; i++) {
@@ -587,6 +606,22 @@ const blackjack = {
         let completeDiv = newDiv.appendChild(newImage)
         // return newDiv.appendChild(newImage)
         return completeDiv
+    },
+    appendCardsForSplit(card) {
+        if(blackjack.players[0].hand[0][0]) {
+            if(blackjack.players[0].hand[0][0].isHandComplete === false){
+                let newDiv = document.createElement('div')
+                newDiv.className = 'playing-card-image-container'
+                newDiv.appendChild(blackjack.createCard(card))
+                document.querySelector(`#split-div-0`).appendChild(newDiv)
+            }
+            else if(blackjack.players[0].hand[0][0].isHandComplete === true) {
+                let newDiv = document.createElement('div')
+                newDiv.className = 'playing-card-image-container'
+                newDiv.appendChild(blackjack.createCard(card))
+                document.querySelector(`#split-div-1`).appendChild(newDiv)
+            }
+        }
     }
 
 
@@ -702,6 +737,7 @@ function determineWinner () {
  const startNewRound = () => {
      blackjack.dealer.hand = []
      blackjack.players.forEach(player => player.hand = [])
+     blackjack.players.forEach(player => player.isSplit = false)
      console.log(blackjack.dealer)
      console.log(blackjack.players[0])
      blackjack.dealCardsToStart(blackjack.deck)
@@ -778,6 +814,7 @@ function determineWinner () {
                 console.log('We are in the split')
                 if(blackjack.players[0].hand[0][0].isHandComplete === false){
                     blackjack.players[0].hitCard(blackjack.deck, blackjack.players[0].hand[0])
+                    blackjack.appendCardsForSplit(blackjack.players[0].hand[0][blackjack.players[0].hand[0].length - 1])
                     //This needs to hit a card and do essentially everything the standard is doing. 
                     blackjack.getValueOfHandwithSplit(blackjack.players[0].hand[0], blackjack.players[0])
 
@@ -795,6 +832,7 @@ function determineWinner () {
                 //THIS WILL FOCUS ON THE ONE INDEX OF THE SPLUT HAND 
                 else if(blackjack.players[0].hand[0][0].isHandComplete === true){
                     blackjack.players[0].hitCard(blackjack.deck, blackjack.players[0].hand[1])
+                    blackjack.appendCardsForSplit(blackjack.players[0].hand[1][blackjack.players[0].hand[1].length - 1])
                     //This needs to hit a card and do essentially everything the standard is doing. 
                     blackjack.getValueOfHandwithSplit(blackjack.players[0].hand[1], blackjack.players[0])
                     
@@ -898,7 +936,7 @@ standButton.addEventListener('click', (e) => {
         console.log(blackjack.players[0].valueOfHand)
         
     }
-    
+    blackjack.players[0].isSplit = true
     // console.log(splitCard)
     // blackjack.players[0].hand.push(splitCard)
     console.log(blackjack.players[0])
