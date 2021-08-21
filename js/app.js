@@ -27,7 +27,12 @@ const hitButton = document.querySelector('#player1-hit-card-button')
 const standButton = document.querySelector('#player1-stand-button')
 const splitButton = document.querySelector('#player1-split-card-button')
 const playAgainButton = document.querySelector('#play-new-round')
-
+const nameButton = document.querySelector('#name-button')
+const nameInput = document.querySelector('#name-input')
+const nameField = document.querySelector('#your-name')
+const computerPrompts = document.querySelector('#computer-inputs')
+const dealerScore = document.querySelector('#dealer-score')
+const playerScore = document.querySelector('#player-score')
 
 //===================
 // Determine a Winner
@@ -350,6 +355,10 @@ const blackjack = {
     },   
     startGame() {
         //Create dealers deck | Will use 6 decks for games
+        nameField.innerHTML = nameInput.value
+        
+
+
         for(let i = 0; i < 6; i++) {
             this.createDeck()
         }
@@ -359,7 +368,9 @@ const blackjack = {
         this.players[0].playerNumber = this.players.length
         this.dealer.playerNumber = this.players.length + 1
         this.totalCardHolders = this.players.length + 1
-
+        this.players[0].name = nameInput.value
+        console.log(this.players[0])
+        nameInput.value = ""
         //NOTE: WANT TO ADD A DISABLE BUTTONS FEATURE HERE
     }, 
     dealToAllPlayers(deck) {
@@ -398,6 +409,7 @@ const blackjack = {
 
         let dealersTotal = this.getValueOfHand(this.dealer.hand,this.dealer)
         console.log(this.getValueOfHand(this.dealer.hand,this.dealer))
+
         this.players.forEach(player => {
             let playerTotal =  this.getValueOfHand(player.hand, player)
             if(playerTotal === 21) {
@@ -409,6 +421,7 @@ const blackjack = {
             console.log('BLACKJACK DEALER')
             determineWinner()
         }
+        
         return
     },
     getValueOfHandwithSplit(hand, player) {
@@ -475,6 +488,7 @@ const blackjack = {
 
                 if(blackjack.players[0].valueOfHand[0] > 21) {
                     console.log('That is a bust! End of turn!')
+                    computerPrompts.innerHTML = 'That is a bust! On to the second hand.'
                     blackjack.completeHand(blackjack.players[0].hand[0])
                     // blackjack.players[0].hand[0].forEach(card => {
                     // card.isHandComplete = true
@@ -496,6 +510,7 @@ const blackjack = {
                 
                 if(blackjack.players[0].valueOfHand[1] > 21) {
                     console.log('That is a bust! End of turn!')
+                    computerPrompts.innerHTML = `That is a bust! Dealer's turn`
                     blackjack.completeHand(blackjack.players[0].hand[0])
                     console.log('End of second split')
                     console.log(blackjack.players[0].hand[0])
@@ -517,6 +532,7 @@ const blackjack = {
         //Have a condition for the dealer
         if(this.currentplayersTurn === this.totalCardHolders) {
             console.log('it is the dealers turn') //Will need a function that allows the dealer to decide whether to hit or stand. 
+            computerPrompts.innerHTML = `Dealer's turn`
             this.runDealersTurn()
             return
         }
@@ -534,6 +550,7 @@ const blackjack = {
             // Highlighting area so player is aware it is their turn [We will make an console.log for now. Goal is to put this on the page]
             console.log(`It is player ${this.players[this.currentplayersTurn - 1].playerNumber}'s turn!`)
             // Player will then be able to take their turn
+            computerPrompts.innerHTML = `It is ${this.players[this.currentplayersTurn - 1].name}'s turn!`
         
     
     },
@@ -668,31 +685,47 @@ function determineWinner () {
                 if ((hand > 21 && blackjack.dealer.valueOfHand > 21) || (hand === blackjack.dealer.valueOfHand)) {
                     console.log(player)
                     console.log('This hand is a draw! No points will be issued!') //No points issued 
+                    computerPrompts.innerHTML = 'This hand is a draw! No points will be issued!'
+                    dealerScore.innerHTML = blackjack.dealer.NumberOfWins
+                    playerScore.innerHTML = player.NumberOfWins
                 }
                 else if(hand > 21 && blackjack.dealer.valueOfHand <= 21) {
                     console.log(player)
                     console.log('You lose this hand. The dealer gets a point and you lose a point.')
+                    computerPrompts.innerHTML = `${player.name} lost this hand. The dealer gets a point and you lose a point.`
                     blackjack.dealer.NumberOfWins++
                     player.NumberOfWins--
+                    dealerScore.innerHTML = blackjack.dealer.NumberOfWins
+                    playerScore.innerHTML = player.NumberOfWins
+
                 }
                 else if(hand <= 21 && blackjack.dealer.valueOfHand > 21) {
                     console.log(player)
                     console.log(`${player.name} wins this hand The dealer loses a point and ${player.name} gets a point.`)
+                    computerPrompts.innerHTML = `${player.name} wins this hand The dealer loses a point and ${player.name} gets a point.`
                     blackjack.dealer.NumberOfWins--
                     player.NumberOfWins++
+                    dealerScore.innerHTML = blackjack.dealer.NumberOfWins
+                    playerScore.innerHTML = player.NumberOfWins
                 }
                 else if (hand <= 21 && blackjack.dealer.valueOfHand <= 21) {
                     if (player.valueOfHand > blackjack.dealer.valueOfHand) {
                         console.log(player)
                         console.log(`${player.name} wins this hand! The dealer loses a point and ${player.name} gets a point.`)
+
+                        computerPrompts.innerHTML = `${player.name} wins this hand! The dealer loses a point and ${player.name} gets a point.`
                         blackjack.dealer.NumberOfWins--
                         player.NumberOfWins++
+                        dealerScore.innerHTML = blackjack.dealer.NumberOfWins
+                        playerScore.innerHTML = player.NumberOfWins
                     }
                     else if(hand < blackjack.dealer.valueOfHand) {
                         console.log(player)
                         console.log(`${player.name} loses this hand! The dealer gets a point and ${player.name} loses a point.`)
                         blackjack.dealer.NumberOfWins++
                         player.NumberOfWins--
+                        dealerScore.innerHTML = blackjack.dealer.NumberOfWins
+                        playerScore.innerHTML = player.NumberOfWins
                     }
                 }
                 return
@@ -701,18 +734,25 @@ function determineWinner () {
         if ((player.valueOfHand > 21 && blackjack.dealer.valueOfHand > 21) || (player.valueOfHand === blackjack.dealer.valueOfHand)) {
             console.log(player)
             console.log('This round is a draw! No points will be issued!') //No points issued 
+            computerPrompts = 'This round is a draw! No points will be issued!'
         }
         else if(player.valueOfHand > 21 && blackjack.dealer.valueOfHand <= 21) {
             console.log(player)
             console.log('You lose this round. The dealer gets a point and you lose a point.')
             blackjack.dealer.NumberOfWins++
             player.NumberOfWins--
+            computerPrompts.innerHTML = 'You lose this round. The dealer gets a point and you lose a point.'
+            dealerScore.innerHTML = blackjack.dealer.NumberOfWins
+            playerScore.innerHTML = player.NumberOfWins
         }
         else if(player.valueOfHand <= 21 && blackjack.dealer.valueOfHand > 21) {
             console.log(player)
             console.log(`${player.name} wins this round! The dealer loses a point and ${player.name} gets a point.`)
             blackjack.dealer.NumberOfWins--
             player.NumberOfWins++
+            computerPrompts.innerHTML = `${player.name} wins this round! The dealer loses a point and ${player.name} gets a point.`
+            dealerScore.innerHTML = blackjack.dealer.NumberOfWins
+            playerScore.innerHTML = player.NumberOfWins
         }
         else if (player.valueOfHand <= 21 && blackjack.dealer.valueOfHand <= 21) {
             if (player.valueOfHand > blackjack.dealer.valueOfHand) {
@@ -720,12 +760,18 @@ function determineWinner () {
                 console.log(`${player.name} wins this round! The dealer loses a point and ${player.name} gets a point.`)
                 blackjack.dealer.NumberOfWins--
                 player.NumberOfWins++
+                computerPrompts.innerHTML = `${player.name} wins this round! The dealer loses a point and ${player.name} gets a point.`
+                dealerScore.innerHTML = blackjack.dealer.NumberOfWins
+                playerScore.innerHTML = player.NumberOfWins
             }
             else if(player.valueOfHand < blackjack.dealer.valueOfHand) {
                 console.log(player)
                 console.log(`${player.name} loses this round! The dealer gets a point and ${player.name} loses a point.`)
                 blackjack.dealer.NumberOfWins++
                 player.NumberOfWins--
+                computerPrompts.innerHTML = `${player.name} loses this round! The dealer gets a point and ${player.name} loses a point.`
+                dealerScore.innerHTML = blackjack.dealer.NumberOfWins
+                playerScore.innerHTML = player.NumberOfWins
             }
         }
    
@@ -906,6 +952,7 @@ standButton.addEventListener('click', (e) => {
 
         }
     }
+    computerPrompts.innerHTML = `Dealer's turn`
     blackjack.completeHand(blackjack.players[0].hand)
     blackjack.endATurn()
     blackjack.startATurn()
@@ -956,22 +1003,27 @@ standButton.addEventListener('click', (e) => {
 
 //====================
 
+nameButton.addEventListener('click', () => {
+    blackjack.startGame()
+    blackjack.dealCardsToStart(blackjack.deck)
+    blackjack.startATurn()
+})
 
 
 
-blackjack.startGame()
-console.log(blackjack.deck)
-// console.log(blackjack.deck.length)
-// blackjack.dealer.hitCard(blackjack.deck)
-blackjack.dealCardsToStart(blackjack.deck)
-// console.log(blackjack.dealer)
-console.log(blackjack.players[0])
-// blackjack.players[0].hitCard(blackjack.deck)
-// blackjack.players[0].hitCard(blackjack.deck)
+// blackjack.startGame()
+// console.log(blackjack.deck)
+// // console.log(blackjack.deck.length)
+// // blackjack.dealer.hitCard(blackjack.deck)
+// blackjack.dealCardsToStart(blackjack.deck)
+// // console.log(blackjack.dealer)
+// console.log(blackjack.players[0])
+// // blackjack.players[0].hitCard(blackjack.deck)
+// // blackjack.players[0].hitCard(blackjack.deck)
 
-// blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
-blackjack.getValueOfHand(blackjack.players[0].hand, blackjack.players[0])
-blackjack.startATurn()
+// // blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
+// blackjack.getValueOfHand(blackjack.players[0].hand, blackjack.players[0])
+// blackjack.startATurn()
      
 
 
