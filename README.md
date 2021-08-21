@@ -1,4 +1,4 @@
-# blackjack-game
+# Blackjack-Game
 
 Also known as Twenty-One, Blackjack is known as one of the most popular and attractive casino card games due to its simplicity and approachability to even the novice player. The objective of Blackjack is through the use of a 52-card pack(we use a 6-deck game), for each player to attempt to beat the dealer. This is done by getting as close to 21 as possible, without going over 21.  
 
@@ -10,11 +10,49 @@ I typically am not someone who gambles often or is saavy with most card games. I
 
 I thought this would be a fun way of solidifying my knowledge of JavaScript and a lot of the concepts involved in using objects and object-oriented programming. Doing a game like Blackjack also allows for a lot of feature updates in order to expand and make the game more robust.
 
-## Wireframes/User Stories 
+## Wireframes
 ![Screen Shot 2021-08-10 at 8 43 04 PM](https://user-images.githubusercontent.com/25748411/130321414-475382be-7ab0-48cb-8c28-4b886f59bcc6.png)
 ![Screen Shot 2021-08-10 at 8 34 40 PM](https://user-images.githubusercontent.com/25748411/130321487-2a4452c6-9092-4386-a64c-df4606bd37b2.png)
 
 Above are my wireframes for my game. Admittedly, I will say as of now, my game does not look like the images. In looking to make the game more single-player at the moment, I decided to move a lot of the displays and butttons around to make better use of the negative space. In future iterations of the game, I will look to update the game to be a better representation of the wireframes shown. 
+
+## User Stories 
+
+### MVP Goals
+- As a player, I want the game to recognize when a player wins a hand
+- As a player, I want the game to recognize when a player goes over 21
+- As a player, I want the game to allow players the ability to hit
+- As a player, I want to the game to allow players the ability to split pairs
+  - If player splits cards, they must play through both hands before moving to the next player or dealer
+- As a player, I want to the player to stand
+- As a player, I would like to know when it is my turn to make a move
+- As a player, I would like to be able to compete against the dealer
+- As a player, I would like the cards to be automatically shuffled
+- As a player, I would like the dealer to use at least 2 decks.
+- As a player, I would like to not be able to easily count the cards
+- As a player, I would like the dealer to deal the cards
+- As a player, if the dealer's total is 17 or more, they must stand
+- As a player, if the dealer's total is 16 or less, the must hit until they get to a value over 17
+- As a player, I would like the computer to keep track of wins and losses.
+- As a player, I would like a UI that is easy to understand and appealing that adds to the experience.
+- As a player, I would like the cards to be presented on the UI
+
+### Stretch Goals
+
+#### Bets/Gambling
+- As a player, I would like to be able to gamble with virtual money
+- As a player, I would like the Min/Max of bets to be $2 - $500
+- As a player, I would like to place bets before dealing
+- As a player, If I split my cards, an equal bet must be place on the other hand
+- As a player, is my original 2 card total equals 9, 10, or 11, I would like to be able to double down
+- As a player, when I double down, I would like to double my bet
+- As a player, when I double down, I would like to receive 1 facedown card from the dealer that isn't turned up until the end of the hand
+- As a player, I would like there to be a set amount of money that players start with
+
+#### Other Strerch Goals 
+As a player, I would like to be able to compete with multiple players(up to 4)(excluding the dealer computer)
+As a player, I would like there to be motion when passing out the cards
+As a player, I would like there to be little tutorials on what everything means(ie. stand, double down, hit, split, etc)
 
 ## Technologies Used
 
