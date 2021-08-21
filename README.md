@@ -50,15 +50,48 @@ Above are my wireframes for my game. Admittedly, I will say as of now, my game d
 - As a player, I would like there to be a set amount of money that players start with
 
 #### Other Strerch Goals 
-As a player, I would like to be able to compete with multiple players(up to 4)(excluding the dealer computer)
-As a player, I would like there to be motion when passing out the cards
-As a player, I would like there to be little tutorials on what everything means(ie. stand, double down, hit, split, etc)
+- As a player, I would like to be able to compete with multiple players(up to 4)(excluding the dealer computer)
+- As a player, I would like there to be motion when passing out the cards
+- As a player, I would like there to be little tutorials on what everything means(ie. stand, double down, hit, split, etc)
 
 ## Technologies Used
 
+1. HTML
+2. CSS
+3. JavaScript
+
+## Approach 
+
+I approach building this game through the use of Classes and objects. My game logic, is mostly housed inside of 1 game object that containers multiple key:value pairs to hold the logic and store values necessary for the game to function. 
+
+In order to be able to build this out for multiplayer action in the future, I decided to use classes in order to store player logic and allow for multiple players to be create in the future, with their own unique player number and name.  
+
+![Screen Shot 2021-08-21 at 8 38 31 AM](https://user-images.githubusercontent.com/25748411/130322070-6e167764-4007-48cb-901c-8d3ebc78bc4e.png)
+Above is the Dealer class that posses most of the player logic
+
+![Screen Shot 2021-08-21 at 8 39 32 AM](https://user-images.githubusercontent.com/25748411/130322093-f4a9c891-c680-4461-8d4c-f7bf30e21899.png)
+A Player Class extends from the dealer in order to utitlize a majority of the dealers logic. Functionality for splitting cards was added to the player class as the dealer can only hit or stand. 
+
+Buttons are primarily used to activate most of the function in the game. Player start the game by inputting their name. Once the submit button is clicked, the game begins and players can choose what they like to do through clicking on the button associated with their choice in move. 
+
+<img width="1427" alt="Screen Shot 2021-08-21 at 8 44 42 AM" src="https://user-images.githubusercontent.com/25748411/130322203-6e09783f-d720-4c17-9fc0-4252a88c1bfe.png">
+
 ## Unsolved Problems
+
+Some of my unsolved problems include:
+
+1. Handling hands with multiple Aces
+2. Getting dealers second card to be facedown and flip once it is their turn 
 
 ## Forthcoming Features
 
+In the future, I would like to add the following features:
+
+1. Ability to have multiple players play
+2. Ability to gamble and place bets 
+3. More indication on the screen of whose turn it is and the moves they can make
+4. Ability for the deck to be randomly re-shuffled after a certain point
+5. Improvements on the overall UI and layout of the game
+6. Addition of animations to represent passing and flipping cards
 
 
