@@ -671,7 +671,7 @@ function determineWinner () {
 
                     if(blackjack.players[0].valueOfHand[0] > 21) {
                         console.log('That is a bust! End of turn!')
-                        computerPrompts.innerHTML = 'That is a bust! On two second split.'
+                        computerPrompts.innerHTML = 'That is a bust! On to second split.'
                         blackjack.completeHand(blackjack.players[0].hand[0])
                         console.log('End of first split')
                         console.log(blackjack.players[0].hand[0])
@@ -804,6 +804,7 @@ standButton.addEventListener('click', (e) => {
 //====================
 
 nameButton.addEventListener('click', () => {
+    nameButton.disabled = true
     blackjack.startGame()
     blackjack.dealCardsToStart(blackjack.deck)
     blackjack.startATurn()
