@@ -49,6 +49,9 @@ body {
     color: red
 }
 
+#computer-inputs {
+    font-size: 25px;
+}
 /* ========================= */
 /* MAIN | MIDDLE SECTION */
 /* ========================= */
@@ -74,7 +77,7 @@ main {
 h4{
     margin: 0;
     color: whitesmoke;
-    font-size: 20px;
+    font-size: 25px;
 }
 
 .insurance-text {

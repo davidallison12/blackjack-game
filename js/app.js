@@ -34,130 +34,6 @@ const computerPrompts = document.querySelector('#computer-inputs')
 const dealerScore = document.querySelector('#dealer-score')
 const playerScore = document.querySelector('#player-score')
 
-//===================
-// Determine a Winner
-//===================
-
-//Determine Winner Function 
-// const determineWinner = () => {
-//     // What needs to happen:
-//     //All players will be compared to the dealer seperately 
-//     // We will then determine if that players hand beats the dealers 
-//     // A point will be issued or taken away after that is determined
-
-//     //In splits we will need to compare both hands to the dealers
-//     if(blackjack.currentplayersTurn === 0 ){
-//         console.log('IM HERE!!!')
-//     let dealersTotal = getValueOfHand(blackjack.dealer.hand,blackjack.dealer)
-//         console.log (getValueOfHand(blackjack.dealer.hand,blackjack.dealer))
-//         // this.players.forEach(player => {
-//         //     let playerTotal =  this.getValueOfHand(player.hand, player)
-//         //     if(playerTotal === 21) {
-//         //         console.log(`BLACKJACK ${player.name}`)
-//         //         determineWinner()
-//         //     }
-//         // })
-//         if(dealersTotal === 21) {
-//             console.log('BLACKJACK DEALER')
-//             determineWinner()
-//         }}
-
-//     blackjack.players.forEach(player =>{ 
-//         if ((player.valueOfHand > 21 && blackjack.dealer.valueOfHand > 21) || (player.valueOfHand === blackjack.dealer.valueOfHand)) {
-//             console.log(player)
-//             console.log('This round is a draw! No points will be issued!') //No points issued 
-//         }
-//         else if(player.valueOfHand > 21 && blackjack.dealer.valueOfHand <= 21) {
-//             console.log(player)
-//             console.log('You lose this round. The dealer gets a point and you lose a point.')
-//         }
-//         else if (player.valueOfHand <= 21 && blackjack.dealer.valueOfHand <= 21) {
-//             if (player.valueOfHand > blackjack.dealer.valueOfHand) {
-//                 console.log(player)
-//                 console.log(`${player.name} wins this round! The dealer loses a point and ${player.name} gets a point.`)
-//             }
-//             else if(player.valueOfHand < blackjack.dealer.valueOfHand) {
-//             console.log(player)
-
-//                 console.log(`${player.name} loses this round! The dealer gets a point and ${player.name} loses a point.`)
-//             }
-//         }
-   
-//     })
-// }
-
-
-//===========================
-// Getting cards to appear on page 
-//===========================
-
-//Identifying Card based off of object. 
-
-// const identifyCard = (rank, suit) => {
-//     //Card objects have rank and suit 
-//     // Can identify by concatinating the first character of rank and suit together.
-
-//     let cardImage = `${rank[0]}${suit[0]}`
-//     console.log(cardImage)
-//     return cardImage
-// }
-
-//Now that I can identify a card, I need that card to appear on the page. 
-
-// const card = {
-//     rank: "Ace",
-//     suit: "Diamonds",
-//     image:"AD"
-// }
-
-
-// const player1 ={
-//     playerNumber: 1
-
-// }
-
-// const dealer = {
-//     name:"dealer"
-// }
-// 
-
-// identifyCard("Ace", "Diamonds")
-
-
-// const appendCard = (player, card) => {
-//     if (player.name === "dealer") {
-
-//         document.querySelector('#dealer-div').appendChild(createCard(card))
-//         return
-//     }
-//     document.querySelector(`#player${player.playerNumber}-div`).appendChild(createCard(card))
-// }
-
-// const handleSplitOnDom = (card) => {
-//     this.removeCards()
-//     for(let i = 0; i < blackjack.hand; i++) {
-//         let newDiv = document.createElement('div')
-//         newDiv.className = 'playing-card-image-container'
-//         newDiv.appendChild(blackjack.createCard(this.hand[i]))
-
-//         let splitDiv = document.createElement('div')
-//         splitDiv.className = 'split-div'
-//         splitDiv.id = `split-div-${this.playerNumber}`
-//         document.querySelector(`#player${this.playerNumber}-div`).appendChild(splitDiv)
-
-//     }
-// }
-
-
-
-// appendCard(player1,card)
-// appendCard(dealer, card)
-
-// document.querySelector('#player1-div').appendChild(appendCard(card))
-
-
-
-
 
 
 
@@ -201,20 +77,7 @@ class Dealer {
             document.querySelector('#dealer-div').appendChild(newDiv)
             return
         }
-        // if(blackjack.players[0].hand[0][0]) {
-        //     if(blackjack.players[0].hand[0][0].isHandComplete === false){
-        //         let newDiv = document.createElement('div')
-        //         newDiv.className = 'playing-card-image-container'
-        //         newDiv.appendChild(blackjack.createCard(card))
-        //         document.querySelector(`#split-div-0`).appendChild(newDiv)
-        //     }
-        //     else if(blackjack.players[0].hand[0][0].isHandComplete === true) {
-        //         let newDiv = document.createElement('div')
-        //         newDiv.className = 'playing-card-image-container'
-        //         newDiv.appendChild(blackjack.createCard(card))
-        //         document.querySelector(`#split-div-1`).appendChild(newDiv)
-        //     }
-        // }
+       
 
         let newDiv = document.createElement('div')
         newDiv.className = 'playing-card-image-container'
@@ -315,39 +178,22 @@ const blackjack = {
             for(let j = 0; j < this.suits.length; j++ ) {
             // for (const suit of suits) {
                 this.deck.push({rank: `${this.ranks[i]}`, suit:`${this.suits[j]}`, value: 0, isFaceup: true,isHandComplete: false, image:`${this.ranks[i]==="10" ? this.ranks[i] :  this.ranks[i].split('')[0]}${this.suits[j].split('')[0]}`}) //Make this into an object
-                // image:`${this.ranks[i]}${this.suits[j]}`
+                
                 
                 if (this.ranks[i] === 'King' || this.ranks[i] === 'Jack' || this.ranks[i] === 'Queen' ) {
-                                // console.log(`Inside of King If Statement: ${rankOfCard}`)
-                                // console.log(player.valueOfHand)
-                                // player.valueOfHand += 10
+                                
                     this.deck[this.cardNumber].value = 10
-                                // console.log(player.valueOfHand)
                     
                 // Conditional for Ace
-            
                 }
                 else if(this.ranks[i] === 'Ace') { //Write functionality for Ace
-                    //             console.log(`Inside of Ace If Statement: ${rankOfCard}`)
-                    //             console.log(player.valueOfHand)
-                    //             player.valueOfHand += 11
+                  
                     this.deck[this.cardNumber].value = 11
-
-                    //             console.log(player.valueOfHand)
-                    //             if(player.valueOfHand > 21) { //Reads to see if over 21 first, then if so, changes value of Ace to 1
-                    //                 player.valueOfHand -= 10
                 }
                 else {
-                    //             console.log(`Inside of If Statement: ${rankOfCard}`)
-                    //             console.log(typeof rankOfCard)
-                    //         //    console.log(rankOfCard !== 'undefined')
+
                     let numericalValue = parseInt(this.deck[this.cardNumber].rank, 10)
-                    //             console.log(typeof numericalValue)
-                                
-                    //             console.log(player.valueOfHand)
-                                
                     this.deck[this.cardNumber].value = numericalValue
-                    //             console.log(player.valueOfHand)
                 }
                 this.cardNumber++
             }
@@ -356,8 +202,6 @@ const blackjack = {
     startGame() {
         //Create dealers deck | Will use 6 decks for games
         nameField.innerHTML = nameInput.value
-        
-
 
         for(let i = 0; i < 6; i++) {
             this.createDeck()
@@ -379,12 +223,11 @@ const blackjack = {
             }
     },
     getValueOfHand(hand, player) {
-        player.valueOfHand = 0 //Setting to 0 to read hand with clean start
-        // console.log(hand)
+        player.valueOfHand = 0 //Setting to 0 to read hand with 
         for(const card of hand) {
             // let rankOfCard = card.rank
             let valueOfCard = card.value
-            // console.log(`This is the card's rank: ${rankOfCard}`)
+
             
             player.valueOfHand += valueOfCard
 
@@ -405,25 +248,23 @@ const blackjack = {
          //Dealers 2nd card should be hidden 
         console.log(this.dealer.hand)
         this.dealer.hand[this.dealer.hand.length-1].isFaceup = false
-
+        // this.determinefaceDown()
 
         let dealersTotal = this.getValueOfHand(this.dealer.hand,this.dealer)
         console.log(this.getValueOfHand(this.dealer.hand,this.dealer))
-
-        // this.players.forEach(player => {
-        //     let playerTotal =  this.getValueOfHand(player.hand, player)
-        //     if(playerTotal === 21) {
-        //         console.log(`BLACKJACK ${player.name}`)
-        //         determineWinner()
-        //     }
-        // })
-        // if(dealersTotal === 21) {
-        //     console.log('BLACKJACK DEALER')
-        //     determineWinner()
-        // }
         
         return
     },
+    // determinefaceDown() {
+    //    for(let i = 0; this.dealer.hand.length; i++) {
+    //        if(this.dealer.hand[i].isFaceup === false) {
+    //         this.dealer.hand[i].image = 'purple_back.png'
+    //        }
+    //        else {
+    //            this.dealer.hand[i].image = `${this.dealer.hand[i].rank ==="10" ? this.dealer.hand[i].rank :  this.dealer.hand[i].rank.split('')[0]}${this.dealer.hand[i].suit.split('')[0]}`
+    //        }
+    //    }
+    // },
     getValueOfHandwithSplit(hand, player) {
         blackjack.determineCorrectValueInSplit(player)
        
@@ -490,14 +331,9 @@ const blackjack = {
                     console.log('That is a bust! End of turn!')
                     computerPrompts.innerHTML = 'That is a bust! On to the second hand.'
                     blackjack.completeHand(blackjack.players[0].hand[0])
-                    // blackjack.players[0].hand[0].forEach(card => {
-                    // card.isHandComplete = true
-                    
-                    // });
+
                     console.log('End of first split')
                     console.log(blackjack.players[0].hand[0])
-                    // blackjack.endATurn()
-                    // blackjack.startATurn()
                 }
                 return
             }
@@ -580,6 +416,7 @@ const blackjack = {
         if (blackjack.currentplayersTurn === blackjack.dealer.playerNumber) {
             blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
             blackjack.dealer.hand[1].isFaceup = true
+            // this.determinefaceDown()
             console.log(blackjack.dealer.hand)
             if (blackjack.dealer.valueOfHand >= 17) {
                 //If hand is greater than or equal to 17 we want to: 
@@ -659,21 +496,6 @@ const blackjack = {
 
 
 }
-
-
-
-// const determineTrueBlackjack = () => {
-//     if(blackjack.currentplayersTurn === 0) {
-//         let dealersTotal =  blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
-//         blackjack.players.map(player =>{
-//            let playerTotal = blackjack.getValueOfHand(player.hand, player)
-//            return playerTotal
-//        })
-//     //    if (dealersTotal === 21 && )
-        
-// }
-// }
-//Issue out Points
 
 
 
@@ -808,52 +630,19 @@ function determineWinner () {
      blackjack.startATurn()
  }
 
+
+
+//=============================
+// BUTTONS AND EVENT LISTENERS
+//=============================
+
+
+
  playAgainButton.addEventListener('click', () => {
     blackjack.dealer.removeCards()
     blackjack.players[0].removeCards()
     startNewRound()
  })
-
-//===================
-// Taking a Turn
-//===================
-
-//Next is taking a turn/Going through a round. What needs to happen is: 
-        // Check to see if anyone has a True blackjack to start (CheckForBlackjack)
-            // If this happens, player/dealer wins round 
-        // If no one has blackjack, first player decides to hit, stand or split(if applicable)
-        //If player hits, they receive another card
-            //If it hits, 21, move on to next players to give them a chance 
-                //Dealer will go next and try to hit 21. They can't hit after going over 16
-        //If player stands, we will move to next player
-        //If player splits, their cards will be moved to 2 separate hands (Need to figure this out)
-            //The player will then hit for both hands. 
-            //***IDEA TO START: Hands are automatically an array within an array
-            //Both hands will be valued seperately 
-
-
-
-
-
-    
-//         // Enabling buttons
-//         // console.log(blackjack)
-//         // console.log(document.querySelector(`.player${blackjack.currentplayersTurn}-buttons-container`))
-//         document.querySelector(`#player${blackjack.currentplayersTurn}-hit-card-button`).disabled = false
-//         document.querySelector(`#player${blackjack.currentplayersTurn}-stand-button`).disabled = false
-//         document.querySelector(`#player${blackjack.currentplayersTurn}-split-card-button`).disabled = false
-
-//         console.log(blackjack.players[0].hand)
-//         //Also include situation for if it is a split
-//         if(blackjack.players[blackjack.currentplayersTurn - 1].hand[0].rank !== blackjack.players[blackjack.currentplayersTurn - 1].hand[1].rank) {
-//             splitButton.disabled = true
-//         }
-//         // Highlighting area so player is aware it is their turn [We will make an console.log for now. Goal is to put this on the page]
-//         console.log(`It is player ${blackjack.players[blackjack.currentplayersTurn - 1].playerNumber}'s turn!`)
-//         // Player will then be able to take their turn
-
-// }
-
 
 
 
@@ -1012,11 +801,6 @@ standButton.addEventListener('click', (e) => {
     
 
 
-// const playARound = () => {
-
-// }
-
-
 //====================
 
 nameButton.addEventListener('click', () => {
@@ -1027,43 +811,3 @@ nameButton.addEventListener('click', () => {
 
 
 
-// blackjack.startGame()
-// console.log(blackjack.deck)
-// // console.log(blackjack.deck.length)
-// // blackjack.dealer.hitCard(blackjack.deck)
-// blackjack.dealCardsToStart(blackjack.deck)
-// // console.log(blackjack.dealer)
-// console.log(blackjack.players[0])
-// // blackjack.players[0].hitCard(blackjack.deck)
-// // blackjack.players[0].hitCard(blackjack.deck)
-
-// // blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
-// blackjack.getValueOfHand(blackjack.players[0].hand, blackjack.players[0])
-// blackjack.startATurn()
-     
-
-
-// console.log(blackjack.deck.length)
-
-// blackjack.dealCardsToStart(blackjack.deck)
-// console.log(blackjack.dealer.hand)
-// console.log(blackjack.dealer.faceDownCard)
-// console.log(blackjack.deck.length)
-// console.log(blackjack.players[0].hand)
-
-
-//If dealer's first card has a value of 10 or 11 then check second card to see if it gives a value of 21
-//         // Give cards values[We will make a function that has computer count values; humans can use their eyes]
-
-
-
-// blackjack.getValueOfHand(blackjack.dealer.hand, blackjack.dealer)
-// blackjack.getValueOfHand(blackjack.players[0].hand, blackjack.players[0])
-
-
-// UI Functionality
-// As a player, I would like a UI that is easy to understand and appealing that adds to the experience.
-// As a player, I would like the cards to be presented on the UI
-
-
-//Making event listeners for 
