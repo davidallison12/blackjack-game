@@ -410,17 +410,17 @@ const blackjack = {
         let dealersTotal = this.getValueOfHand(this.dealer.hand,this.dealer)
         console.log(this.getValueOfHand(this.dealer.hand,this.dealer))
 
-        this.players.forEach(player => {
-            let playerTotal =  this.getValueOfHand(player.hand, player)
-            if(playerTotal === 21) {
-                console.log(`BLACKJACK ${player.name}`)
-                determineWinner()
-            }
-        })
-        if(dealersTotal === 21) {
-            console.log('BLACKJACK DEALER')
-            determineWinner()
-        }
+        // this.players.forEach(player => {
+        //     let playerTotal =  this.getValueOfHand(player.hand, player)
+        //     if(playerTotal === 21) {
+        //         console.log(`BLACKJACK ${player.name}`)
+        //         determineWinner()
+        //     }
+        // })
+        // if(dealersTotal === 21) {
+        //     console.log('BLACKJACK DEALER')
+        //     determineWinner()
+        // }
         
         return
     },
@@ -526,7 +526,18 @@ const blackjack = {
         }
     },
     startATurn () { //This function will let player know it is their turn and they can play
-        
+        if (this.currentplayersTurn === 0) {
+            if(this.getValueOfHand(this.dealer.hand,this.dealer) === 21) {
+                determineWinner()
+                determineWinner()
+                return
+            }
+            else if(this.getValueOfHand(this.players[0].hand, this.players[0]) === 21) {
+                determineWinner()
+                determineWinner()
+                return
+            }
+        }
         //Increasing counter
         this.currentplayersTurn = this.currentplayersTurn+=1
         //Have a condition for the dealer
@@ -734,7 +745,7 @@ function determineWinner () {
         if ((player.valueOfHand > 21 && blackjack.dealer.valueOfHand > 21) || (player.valueOfHand === blackjack.dealer.valueOfHand)) {
             console.log(player)
             console.log('This round is a draw! No points will be issued!') //No points issued 
-            computerPrompts = 'This round is a draw! No points will be issued!'
+            computerPrompts.innerHTML = 'This round is a draw! No points will be issued!'
         }
         else if(player.valueOfHand > 21 && blackjack.dealer.valueOfHand <= 21) {
             console.log(player)
@@ -871,6 +882,7 @@ function determineWinner () {
 
                     if(blackjack.players[0].valueOfHand[0] > 21) {
                         console.log('That is a bust! End of turn!')
+                        computerPrompts.innerHTML = 'That is a bust! On two second split.'
                         blackjack.completeHand(blackjack.players[0].hand[0])
                         console.log('End of first split')
                         console.log(blackjack.players[0].hand[0])
@@ -889,6 +901,7 @@ function determineWinner () {
                     
                     if(blackjack.players[0].valueOfHand[1] > 21) {
                         console.log('That is a bust! End of turn!')
+                        computerPrompts.innerHTML = `That is a bust! Dealer's turn`
                         blackjack.completeHand(blackjack.players[0].hand[0])
                         console.log('End of second split')
                         console.log(blackjack.players[0].hand[0])
@@ -918,6 +931,7 @@ function determineWinner () {
         console.log(blackjack.players[0].hand)
         if(blackjack.players[0].valueOfHand > 21) {
             console.log('That is a bust! End of turn!')
+            computerPrompts.innerHTML = `That is a bust! Dealer's turn.`
             blackjack.endATurn()
             blackjack.startATurn()
         }
@@ -936,6 +950,7 @@ standButton.addEventListener('click', (e) => {
                 blackjack.getValueOfHandwithSplit(blackjack.players[0].hand[0], blackjack.players[0])
                 blackjack.completeHand(blackjack.players[0].hand[0])
                 console.log("Player chose to stand on split 1 of 2. We are moving on to split 2 of 2")
+                computerPrompts.innerHTML = `${blackjack.players[0].name} chose to stand on split 1 of 2. We are moving on to split 2 of 2`
                 // blackjack.startATurn()
                 return
             }
@@ -945,6 +960,7 @@ standButton.addEventListener('click', (e) => {
                 blackjack.getValueOfHandwithSplit(blackjack.players[0].hand[1], blackjack.players[0])
                 blackjack.completeHand(blackjack.players[0].hand[0])
                 console.log("Player chose to stand on split 2 of 2. End of turn.")
+                computerPrompts.innerHTML = `${blackjack.players[0].name} chose to stand on split 2 of 2. Dealer's turn`
                 blackjack.endATurn()
                 blackjack.startATurn()
                 return

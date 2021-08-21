@@ -99,42 +99,44 @@ span{
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-bottom: 5vh;
+    padding-bottom: 4vh;
 }
 
 #dealer-div {
     display: flex;
-    justify-content: end;
-    align-items: end;
+    justify-content: center;
+    align-items: center;
     height: 30vh;
-    padding-bottom: 5vh;
+    padding-bottom: 2vh;
+    width: 44vw;
 
 }
 
 #players-container {
     min-height: 30vh;
     /* width: 2vh; */
-    border: gold solid 1px;
+    /* border: gold solid 1px; */
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-bottom: 5vh;
+    padding: 4vh 0;
 
 }
 
 #player1-div {
     display: flex;
-    /* justify-content: end; */
-    align-items: end;
+    justify-content: center;
+    align-items: center;
     height: 30vh;
+    width: 44vw;
     
 
 }
 
 .player-container {
     min-height: 30vh;
-    border: blue solid 1px;
-    width: 15vw;
+    /* border: blue solid 1px; */
+    /* width: 15vw; */
 
 }
 
@@ -144,6 +146,10 @@ span{
     height: 25vh;
 }
 
+.split-div {
+    margin: 0 5vw;
+    display: flex
+}
 
 
 /* ========================= */
