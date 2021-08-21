@@ -67,9 +67,11 @@ I approach building this game through the use of Classes and objects. My game lo
 In order to be able to build this out for multiplayer action in the future, I decided to use classes in order to store player logic and allow for multiple players to be create in the future, with their own unique player number and name.  
 
 ![Screen Shot 2021-08-21 at 8 38 31 AM](https://user-images.githubusercontent.com/25748411/130322070-6e167764-4007-48cb-901c-8d3ebc78bc4e.png)
+
 Above is the Dealer class that posses most of the player logic
 
 ![Screen Shot 2021-08-21 at 8 39 32 AM](https://user-images.githubusercontent.com/25748411/130322093-f4a9c891-c680-4461-8d4c-f7bf30e21899.png)
+
 A Player Class extends from the dealer in order to utitlize a majority of the dealers logic. Functionality for splitting cards was added to the player class as the dealer can only hit or stand. 
 
 Buttons are primarily used to activate most of the function in the game. Player start the game by inputting their name. Once the submit button is clicked, the game begins and players can choose what they like to do through clicking on the button associated with their choice in move. 
