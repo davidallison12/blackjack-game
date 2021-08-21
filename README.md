@@ -84,6 +84,7 @@ Some of my unsolved problems include:
 
 1. Handling hands with multiple Aces
 2. Getting dealers second card to be facedown and flip once it is their turn 
+3. Getting cards to overlap eachother (Using CSS Grid)
 
 ## Forthcoming Features
 
